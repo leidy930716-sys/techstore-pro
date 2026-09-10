@@ -25,6 +25,7 @@
       <a href="nosotros.html">Nosotros</a>
       <a href="contacto.html">Contacto</a>
       <a href="registro.html" class="activo">Registro</a>
+      <a href="login.html">Login</a>
     </nav>
     <!-- ✏️ S07: botón tema — extremo derecho, fuera del nav -->
     <button id="btn-tema" class="btn-tema" aria-label="Cambiar tema">🌙</button>
@@ -50,11 +51,20 @@
       <span class="error" id="error-reg-email"></span>
     </div>
 
+    <!-- CAMPO CONTRASEÑA -->
+    <div class="campo">
+      <label for="reg-password">Contraseña</label>
+      <input type="password" id="reg-password"
+        placeholder="Mínimo 6 caracteres"
+        autocomplete="new-password">
+      <span class="error" id="error-reg-password"></span>
+    </div>
+
     <!-- CAMPO DEPARTAMENTO — completo: es un select, no un input -->
     <div class="campo">
       <label for="reg-departamento">Departamento</label>
       <!-- JavaScript llenará este select con los 33 departamentos -->
-      <select id="reg-departamento">
+      <select id="reg-departamento" name="dep">
         <option value="">Cargando departamentos...</option>
       </select>
       <span class="error" id="error-reg-departamento"></span>
@@ -63,7 +73,7 @@
     <!-- ✏️ CAMPO MUNICIPIO — construye tú siguiendo el mismo patrón que Departamento -->
     <div class="campo">
       <label for="reg-municipio">Municipio</label>
-      <select id="reg-municipio" disabled>
+      <select id="reg-municipio" name="Ciudad" disabled>
         <option value="">Primero elige un departamento</option>
       </select>
       <span class="error" id="error-reg-municipio"></span>

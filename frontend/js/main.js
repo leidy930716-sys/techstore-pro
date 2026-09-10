@@ -174,7 +174,7 @@ async function cargarProductos() {
   try {
     // PASO 1 — Pedir el archivo JSON al servidor
     // await pausa aquí hasta que llegue la respuesta (el sobre)
-    const respuesta = await fetch('data/productos.json');
+    const respuesta = await fetch('http://localhost:3000/api/productos');
 
     // PASO 2 — Leer el contenido del JSON como array JavaScript
     // .json() también es asíncrono → necesita su propio await
@@ -469,3 +469,34 @@ if (btnVaciar) {
 }
 
 mostrarPaginaCarrito(); // llamar al cargar
+
+// ===== S17c: ESTADO DE SESIÓN EN EL NAV =====
+//lee el token de localStorage y actualiza el nav en todas las páginas
+function actualizarNavSesion() {
+  const token = localStorage.getItem('token');
+  const nombre = localStorage.getItem('usuario-nombre');
+  const enlaceLogin = document.querySelector('#nav-login');
+
+  if(!enlaceLogin) return; //no estamos en una página con nav-login
+
+  if(token && nombre) {
+    // Logueado - mostrar nombre ycerrar sesión al hacer clic
+    enlaceLogin.textContent = '👤' + nombre;
+    enlaceLogin.href = '#';
+    enlaceLogin.title = 'Cerrar sesión';
+    enlaceLogin.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (confirm('¿Cerrar sesión?')) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('usuario-nombre');
+        window.location.href = 'login.html';
+      }
+    });
+  } else {
+    // No logueado - enlace normal
+    enlaceLogin.textContent = 'Login';
+    enlaceLogin.href = 'login.html';
+    }
+  }
+
+  actualizarNavSesion(); // ejecutar al cargar cada página
