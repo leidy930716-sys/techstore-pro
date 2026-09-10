@@ -146,6 +146,7 @@ function crearTarjeta(producto) {
       data-nombre="${producto.nombre}"
       data-desc="${producto.descripcion}"
       data-precio="${producto.precio}">
+      data-imagen="${producto.imagen || ' '}">
       <span class="badge-disponible">✓ Disponible</span>
       <img src="${producto.imagen}" alt="${producto.nombre}" class="tarjeta-img">
       <div class="tarjeta-info">
@@ -221,6 +222,8 @@ if (modal) {
     document.querySelector('#modal-titulo').textContent = tarjeta.dataset.nombre || 'Producto';
     document.querySelector('#modal-desc').textContent   = tarjeta.dataset.desc   || '';
     document.querySelector('#modal-precio').textContent = tarjeta.dataset.precio || '';
+    modal.dataset.imagen = tarjeta.dataset.imagen || '';
+    modal.dataset.id = tarjeta.dataset.id || '';
     modal.classList.add('visible');
   }
 
@@ -384,10 +387,13 @@ function agregarAlCarrito(producto) {
 const btnModalCarrito = document.querySelector('.modal-btn-carrito');
 if (btnModalCarrito) {
   btnModalCarrito.addEventListener('click', function() {
+    const modal = document.getElementById('modal-producto');
     // Leer los datos del producto desde el modal
     const producto = {
+      id: modal.dataset.id,
       nombre: document.getElementById('modal-titulo').textContent,
       precio: document.getElementById('modal-precio').textContent,
+      imagen: modal.dataset.imagen || '',
       icono: document.getElementById('modal-icono').textContent,
       fecha:  new Date().toLocaleDateString('es-CO')
     };
@@ -432,8 +438,13 @@ function mostrarPaginaCarrito() {
   carrito.forEach(function(producto, indice) {
     const item = document.createElement('div');
     item.classList.add('carrito-item');
+
+    // si tiene imagen, mostrarla; si no, mostrar el emoji
+    const imagenHTML = producto.imagen
+      ? `<img src="${producto.imagen}" alt="${producto.nombre}" class="carrito-item-imagen">`
+      : `<span class="carrito-item-icono">${producto.icono}</span>`;
     item.innerHTML = `
-      <span class="carrito-item-icono">${producto.icono}</span>
+      ${imagenHTML}
       <div class="carrito-item-info">
         <div class="carrito-item-nombre">${producto.nombre}</div>
         <div class="carrito-item-precio">${producto.precio}</div>
