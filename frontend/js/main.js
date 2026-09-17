@@ -135,30 +135,26 @@ if (formulario) {  // solo corre en contacto.html donde existe el formulario
   });
 }
 
-// PASO 2 — Función que convierte UN objeto producto en HTML de tarjeta
-// Usa backtick ` (no comillas) para escribir HTML con variables ${...}
-// Las clases .tarjeta .tarjeta-img etc. ya están definidas en styles.css
 function crearTarjeta(producto) {
-  return `
-    <article class="tarjeta"
-      data-id="${producto.id}"
-      data-icono="${producto.icono || '📦'}"
-      data-nombre="${producto.nombre}"
-      data-desc="${producto.descripcion}"
-      data-precio="${producto.precio}">
-      data-imagen="${producto.imagen || ' '}">
-      <span class="badge-disponible">✓ Disponible</span>
-      <img src="${producto.imagen}" alt="${producto.nombre}" class="tarjeta-img">
-      <div class="tarjeta-info">
+  return `<article class="tarjeta"
+    data-id="${producto.id}"
+    data-icono="${producto.icono || '📦'}"
+    data-nombre="${producto.nombre}"
+    data-desc="${producto.descripcion}"
+    data-precio="${producto.precio}"
+    data-imagen="${producto.imagen || ''}">
+
+    <span class="badge-disponible">✓ Disponible</span>
+    <img src="${producto.imagen}" alt="${producto.nombre}" class="tarjeta-img">
+    <div class="tarjeta-info">
         <h3 class="tarjeta-nombre">${producto.nombre}</h3>
         <p class="tarjeta-desc">${producto.descripcion}</p>
         <div class="tarjeta-pie">
-          <span class="tarjeta-precio">${producto.precio}</span>
-          <button class="btn-accion">Ver más</button>
+            <span class="tarjeta-precio">${producto.precio}</span>
+            <button class="btn-accion">Ver más</button>
         </div>
-      </div>
-    </article>
-  `;
+    </div>
+  </article>`;
 }
 
 // ================================================
@@ -181,10 +177,12 @@ async function cargarProductos() {
     // .json() también es asíncrono → necesita su propio await
     const productos = await respuesta.json();
 
-    // PASO 3 — Renderizar las tarjetas en el grid
-    // productos.map(crearTarjeta) convierte cada objeto en HTML
-    grid.innerHTML = productos.map(crearTarjeta).join('');
-
+    // =================================================================
+    // PASO 3 — Renderizar las tarjetas en el grid (CON FILTRO SEGURO)
+    // .filter elimina cualquier objeto corrupto o sin imagen antes de mapear
+    // =================================================================
+    const productosValidos = productos.filter(p => p && p.imagen);
+    grid.innerHTML = productosValidos.map(crearTarjeta).join('');
     // PASO 4 — Reconectar todo lo que depende de las tarjetas
     // Estas funciones buscan .tarjeta en el HTML → deben ir DESPUÉS del innerHTML
     registrarBotonesModal(); // botones "Ver más" → abrir modal
@@ -512,3 +510,85 @@ function actualizarNavSesion() {
   }
 
   actualizarNavSesion(); // ejecutar al cargar cada página
+
+  // ===== 517c: CHECKOUT - CONFIRMAR PEDIDO =====
+
+const btnConfirmar = document.getElementById('btn-confirmar');
+
+if (btnConfirmar) {
+    btnConfirmar.addEventListener('click', async function() {
+        const token = localStorage.getItem('token');
+        const carrito = leerCarrito();
+        const mensaje = document.getElementById('checkout-mensaje');
+
+        // 1. Verificar sesión
+        if (!token) {
+            mensaje.innerHTML = '<div style="background:#fef9c3;border:1px solid #fde047;border-radius:10px;padding:16px;">'
+            + '<p style="color:#854d0e;font-weight:600;">⚠️ Debes iniciar sesión para confirmar tu pedido.</p>'
+            + '<a href="login.html" style="color:#92400e;">Ir al login ..</a></div>';
+            mensaje.style.display = 'block';
+            return;
+        }
+
+        // 2. Verificar que el carrito no esté vacío
+        if (carrito.length == 0) {
+            mensaje.innerHTML = '<div style="background:#fef9c3;border:1px solid #fde047;border-radius:10px;padding:16px;">'
+            + '<p style="color:#854d0e;font-weight:600;">⚠️ El carrito está vacío.</p></div>';
+            mensaje.style.display = 'block';
+            return;
+        }
+
+        // 3. Construir el array para el backend
+        const productosParaEnviar = carrito.map(function(item) {
+            return { producto: item.id, cantidad: 1 };
+        });
+
+        const total = carrito.reduce(function(acc, item) {
+            return acc + (parseFloat(item.precio.replace(/[^0-9.]/g, '')) || 0);
+        }, 0);
+
+        try {
+            btnConfirmar.disabled = true;
+            btnConfirmar.textContent = 'Enviando...';
+
+            // 4. Enviar al backend con token JWT
+            const respuesta = await fetch('http://localhost:3000/api/ordenes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify({ productos: productosParaEnviar, total: total })
+            });
+
+            const datos = await respuesta.json();
+
+            if (!respuesta.ok) {
+                mensaje.innerHTML = '<div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:10px;padding:16px;">'
+                + '<p style="color:#991b1b;font-weight:600;">❌ ' + (datos.error || 'Error al crear la orden') + '</p></div>';
+                mensaje.style.display = 'block';
+                btnConfirmar.disabled = false;
+                btnConfirmar.textContent = '✅ Confirmar pedido';
+                return;
+            }
+
+            // 5. Éxito - vaciar carrito y mostrar confirmación
+            localStorage.removeItem('carrito');
+            actualizarBadge();
+
+            mensaje.innerHTML = '<div style="background:#dcfce7;border:1px solid #bbf7d0;border-radius:10px;padding:20px;">'
+            + '<p style="color:#15803d;font-weight:700;font-size:16px;">✅ ¡Pedido confirmado!</p>'
+            + '<p style="color:#166534;font-size:13px;margin-top:6px;">Tu orden fue registrada en el sistema.</p>'
+            + '<a href="index.html" style="color:#15803d;font-weight:600;">.. Volver al inicio</a></div>';
+            mensaje.style.display = 'block';
+            mostrarPaginaCarrito();
+
+        } catch (error) {
+            mensaje.innerHTML = '<div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:10px;padding:16px;">'
+            + '<p style="color:#991b1b;font-weight:600;">❌ No se pudo conectar. Verifica que el servidor esté corriendo.</p></div>';
+            mensaje.style.display = 'block';
+            btnConfirmar.disabled = false;
+            btnConfirmar.textContent = '✅ Confirmar pedido';
+        }
+    });
+}
