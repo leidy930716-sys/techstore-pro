@@ -222,6 +222,7 @@ if (modal) {
     document.querySelector('#modal-titulo').textContent = tarjeta.dataset.nombre || 'Producto';
     document.querySelector('#modal-desc').textContent   = tarjeta.dataset.desc   || '';
     document.querySelector('#modal-precio').textContent = tarjeta.dataset.precio || '';
+    //guardar la imagen y el id en data-* del modal para usarlo al agregar al carrito
     modal.dataset.imagen = tarjeta.dataset.imagen || '';
     modal.dataset.id = tarjeta.dataset.id || '';
     modal.classList.add('visible');
@@ -393,8 +394,8 @@ if (btnModalCarrito) {
       id: modal.dataset.id,
       nombre: document.getElementById('modal-titulo').textContent,
       precio: document.getElementById('modal-precio').textContent,
-      imagen: modal.dataset.imagen || '',
       icono: document.getElementById('modal-icono').textContent,
+      imagen: modal.dataset.imagen || '',
       fecha:  new Date().toLocaleDateString('es-CO')
     };
     

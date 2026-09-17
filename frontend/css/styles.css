@@ -1044,6 +1044,13 @@ body.tema-oscuro .modal-desc   { color: #94a3b8; }
 }
 
 .carrito-item-icono { font-size: 32px; }
+.carrito-item-img{
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
 .carrito-item-info  { flex: 1; }
 .carrito-item-nombre { font-weight: 700; color: var(--color-oscuro); }
 .carrito-item-precio { color: var(--color-primario); font-weight: 700; }

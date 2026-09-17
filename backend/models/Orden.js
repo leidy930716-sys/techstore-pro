@@ -25,8 +25,11 @@ const ordenSchema = new Schema({
     estado: {
         type: String,
         default: 'pendiente',
-        enum: ['pendiente', 'procesando', 'enviado', 'entregado']
-    }
+        enum: ['pendiente', 'procesando', 'enviado', 'entregado', 'PAGO CONFIRMADO']
+    },
+    // Datos de Wompi — se llenan solo cuando el pago fue aprobado
+  wompiTransactionId: { type: String },
+  wompiReference:     { type: String }
 }, { timestamps: true }); // agrega createdAt y updatedAt
 
 const Orden = mongoose.model('Orden', ordenSchema);
