@@ -4,6 +4,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Usuario = require("../models/Usuario");
+const verificarToken = require('../middleware/auth');
 const router = express.Router();
 
 // 2. POST /api/auth/registro - crear cuenta nueva
@@ -55,5 +56,16 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// 4. Exportar el router
-module.exports = router; 
+
+router.get('/perfil', verificarToken, async (req, res) => {
+    try {
+        // req.usuario.id viene del JWT decodificado por verificarToken
+        // .select('-password') excluye el hash - NUNCA enviar la contraseña al frontend
+        const usuario = await Usuario.findById(req.usuario.id).select('-password');
+        if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
+        res.json(usuario);
+    } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// 4. Exportar el route
+module.exports = router;
