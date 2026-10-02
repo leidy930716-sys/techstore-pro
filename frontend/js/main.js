@@ -151,7 +151,8 @@ function crearTarjeta(producto) {
         <p class="tarjeta-desc">${producto.descripcion}</p>
         <div class="tarjeta-pie">
             <span class="tarjeta-precio">${producto.precio}</span>
-            <button class="btn-accion">Ver más</button>
+            <!-- enlace <a> en vez de <button> - el navegador navega a producto.html -->
+<a href="producto.html?id=${producto._id || producto.id || ''}" class="btn-accion">Ver más</a>
         </div>
     </div>
   </article>`;
@@ -230,6 +231,8 @@ if (modal) {
   // porque los botones .btn-accion los crea crearTarjeta() dinámicamente
   function registrarBotonesModal() {
     document.querySelectorAll('.btn-accion').forEach(function(boton) {
+      // si es un enlace <a> -> el navegador ya lo aneja, no registar el modal
+      if(boton.tagName ==='A') return;
       boton.addEventListener('click', function() {
         abrirModal(boton.closest('.tarjeta'));
       });
@@ -485,110 +488,224 @@ mostrarPaginaCarrito(); // llamar al cargar
 function actualizarNavSesion() {
   const token = localStorage.getItem('token');
   const nombre = localStorage.getItem('usuario-nombre');
+  const rol    = localStorage.getItem('usuario-rol');
   const enlaceLogin = document.querySelector('#nav-login');
 
   if(!enlaceLogin) return; //no estamos en una página con nav-login
 
   if(token && nombre) {
-    // Logueado - mostrar nombre ycerrar sesión al hacer clic
-    enlaceLogin.textContent = '👤' + nombre;
-    enlaceLogin.href = '#';
-    enlaceLogin.title = 'Cerrar sesión';
-    enlaceLogin.addEventListener('click', function(e) {
-      e.preventDefault();
-      if (confirm('¿Cerrar sesión?')) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('usuario-nombre');
+    // 1.construir wrapper y botón con el nombre
+    const wrapper = document.createElement('div');
+      wrapper.className = 'usuario-dropdown';
+      const btn = document.createElement('button');
+      btn.className = 'usuario-btn';
+      btn.textContent = '👤' + nombre;
+
+      // 2. constuir menú con las tres opciones 
+      const menu = document.createElement('div');
+      menu.className = 'usuario-menu';
+      const linkPerfil = document.createElement('a');
+      linkPerfil.href = 'perfil.html'; linkPerfil.textContent = '👤 Mi perfil';
+      const linkPedidos = document.createElement('a');
+      linkPedidos.href = 'mispedidos.html'; linkPedidos.textContent = '📦 Mis pedidos';
+      const sep = document.createElement('div');
+      sep.className = 'menu separador';
+      const btnCerrar = document.createElement('button');
+      btnCerrar.className = 'btn-cerrar-sesion';
+      btnCerrar.textContent = ' 🚪 Cerrar sesión';
+      btnCerrar.addEventListener('click', function() {
+        localStorage.removeItem('token'); localStorage.removeItem('usuario-nombre');
+        localStorage.removeItem('usuario-rol');
         window.location.href = 'login.html';
-      }
-    });
+      });
+      menu.appendChild(linkPerfil); menu.appendChild(linkPedidos);
+      if (rol === 'admin') menu.appendChild(linkAdmin);
+      menu.appendChild(sep); menu.appendChild(btnCerrar);
+      wrapper.appendChild(btn); wrapper.appendChild(menu);
+
+      // 3. 0cultar "Registro" - no tiene sentido estando logueado
+      const navMenu = document.querySelector('#nav-menu');
+      if (navMenu) navMenu.querySelectorAll('a').forEach(function(a) {
+        if (a.href.includes('registro.html')) a.style.display ='none';
+      });
+
+      // 4. Reemplazae el <a id="nav-login"> por el dropdown
+      enlaceLogin.parentNode.replaceChild(wrapper, enlaceLogin);
+
+      // 5. Abrir/cerrar al hacer click; cerrar al click afuera
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation(); menu.classList.toggle('abierto');
+      });
+      document.addEventListener('click', function(e) {
+        if (!wrapper.contains(e.target)) menu.classList.remove('abierto');
+      });
+
   } else {
-    // No logueado - enlace normal
     enlaceLogin.textContent = 'Login';
     enlaceLogin.href = 'login.html';
-    }
   }
+}
 
-  actualizarNavSesion(); // ejecutar al cargar cada página
+actualizarNavSesion();
 
-  // ===== 517c: CHECKOUT - CONFIRMAR PEDIDO =====
+// ===== S18A: CHECKOUT — PAGAR CON WOMPI =====
+// Ya no se crea la orden directamente. Se pide una firma al backend,
+// se abre el Widget de Wompi, y la orden se crea solo si el pago es aprobado
+// (el backend lo confirma vía polling, ver /api/pagos/estado/:reference).
 
 const btnConfirmar = document.getElementById('btn-confirmar');
+let pollingInterval = null;
 
 if (btnConfirmar) {
-    btnConfirmar.addEventListener('click', async function() {
-        const token = localStorage.getItem('token');
-        const carrito = leerCarrito();
-        const mensaje = document.getElementById('checkout-mensaje');
+  btnConfirmar.addEventListener('click', async function() {
+    const token   = localStorage.getItem('token');
+    const carrito = leerCarrito();
+    const mensaje = document.getElementById('checkout-mensaje');
 
-        // 1. Verificar sesión
-        if (!token) {
-            mensaje.innerHTML = '<div style="background:#fef9c3;border:1px solid #fde047;border-radius:10px;padding:16px;">'
-            + '<p style="color:#854d0e;font-weight:600;">⚠️ Debes iniciar sesión para confirmar tu pedido.</p>'
-            + '<a href="login.html" style="color:#92400e;">Ir al login ..</a></div>';
-            mensaje.style.display = 'block';
-            return;
-        }
+    if (!token) {
+      mensaje.innerHTML =
+        '<div style="background:#fef9c3; border:1px solid #fde047; border-radius:10px; padding:16px;">' +
+          '<p style="color:#854d0e; font-weight:600;">⚠️ Debes iniciar sesión para confirmar tu pedido.</p>' +
+          '<a href="login.html" style="color:#92400e;">Ir al login →</a>' +
+        '</div>';
+      mensaje.style.display = 'block';
+      return;
+    }
 
-        // 2. Verificar que el carrito no esté vacío
-        if (carrito.length == 0) {
-            mensaje.innerHTML = '<div style="background:#fef9c3;border:1px solid #fde047;border-radius:10px;padding:16px;">'
-            + '<p style="color:#854d0e;font-weight:600;">⚠️ El carrito está vacío.</p></div>';
-            mensaje.style.display = 'block';
-            return;
-        }
+    if (carrito.length === 0) {
+      mensaje.innerHTML =
+        '<div style="background:#fef9c3; border:1px solid #fde047; border-radius:10px; padding:16px;">' +
+          '<p style="color:#854d0e; font-weight:600;">⚠️ El carrito está vacío.</p>' +
+        '</div>';
+      mensaje.style.display = 'block';
+      return;
+    }
 
-        // 3. Construir el array para el backend
-        const productosParaEnviar = carrito.map(function(item) {
-            return { producto: item.id, cantidad: 1 };
-        });
-
-        const total = carrito.reduce(function(acc, item) {
-            return acc + (parseFloat(item.precio.replace(/[^0-9.]/g, '')) || 0);
-        }, 0);
-
-        try {
-            btnConfirmar.disabled = true;
-            btnConfirmar.textContent = 'Enviando...';
-
-            // 4. Enviar al backend con token JWT
-            const respuesta = await fetch('http://localhost:3000/api/ordenes', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                },
-                body: JSON.stringify({ productos: productosParaEnviar, total: total })
-            });
-
-            const datos = await respuesta.json();
-
-            if (!respuesta.ok) {
-                mensaje.innerHTML = '<div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:10px;padding:16px;">'
-                + '<p style="color:#991b1b;font-weight:600;">❌ ' + (datos.error || 'Error al crear la orden') + '</p></div>';
-                mensaje.style.display = 'block';
-                btnConfirmar.disabled = false;
-                btnConfirmar.textContent = '✅ Confirmar pedido';
-                return;
-            }
-
-            // 5. Éxito - vaciar carrito y mostrar confirmación
-            localStorage.removeItem('carrito');
-            actualizarBadge();
-
-            mensaje.innerHTML = '<div style="background:#dcfce7;border:1px solid #bbf7d0;border-radius:10px;padding:20px;">'
-            + '<p style="color:#15803d;font-weight:700;font-size:16px;">✅ ¡Pedido confirmado!</p>'
-            + '<p style="color:#166534;font-size:13px;margin-top:6px;">Tu orden fue registrada en el sistema.</p>'
-            + '<a href="index.html" style="color:#15803d;font-weight:600;">.. Volver al inicio</a></div>';
-            mensaje.style.display = 'block';
-            mostrarPaginaCarrito();
-
-        } catch (error) {
-            mensaje.innerHTML = '<div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:10px;padding:16px;">'
-            + '<p style="color:#991b1b;font-weight:600;">❌ No se pudo conectar. Verifica que el servidor esté corriendo.</p></div>';
-            mensaje.style.display = 'block';
-            btnConfirmar.disabled = false;
-            btnConfirmar.textContent = '✅ Confirmar pedido';
-        }
+    const productosParaEnviar = carrito.map(function(item) {
+      return { producto: item.id, cantidad: 1 };
     });
+
+    // Calcular el total — el precio viene como string "$1.299.000".
+    // Los puntos son separadores de miles (formato colombiano), no decimales — hay que quitarlos.
+    const total = carrito.reduce(function(acumulado, item) {
+      const numero = parseFloat((item.precio || '').replace(/[^0-9]/g, '')) || 0;
+      return acumulado + numero;
+    }, 0);
+
+    try {
+      btnConfirmar.disabled    = true;
+      btnConfirmar.textContent = 'Preparando pago...';
+
+      // Pedir al backend la firma de integridad (crea la Transaccion en estado PENDING)
+      const respuesta = await fetch('http://localhost:3000/api/pagos/firma', {
+        method:  'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({ productos: productosParaEnviar, total: total })
+      });
+
+      const datos = await respuesta.json();
+
+      if (!respuesta.ok) {
+        mensaje.innerHTML =
+          '<div style="background:#fee2e2; border:1px solid #fca5a5; border-radius:10px; padding:16px;">' +
+            '<p style="color:#991b1b; font-weight:600;">❌ ' + (datos.error || 'Error al preparar el pago') + '</p>' +
+          '</div>';
+        mensaje.style.display = 'block';
+        btnConfirmar.disabled    = false;
+        btnConfirmar.textContent = '💳 Pagar con Wompi';
+        return;
+      }
+
+      // Abrir el Widget de Wompi con los datos de la firma
+      const checkout = new WidgetCheckout({
+        currency:      datos.currency,
+        amountInCents: datos.amountInCents,
+        reference:     datos.reference,
+        publicKey:     datos.publicKey,
+        signature:     { integrity: datos.signature }
+      });
+
+      checkout.open(function() {
+        // Este callback se ejecuta cuando el widget se cierra (pago terminado o cancelado)
+        iniciarPolling(datos.reference, token, mensaje);
+      });
+
+    } catch (error) {
+      mensaje.innerHTML =
+        '<div style="background:#fee2e2; border:1px solid #fca5a5; border-radius:10px; padding:16px;">' +
+          '<p style="color:#991b1b; font-weight:600;">❌ No se pudo conectar. Verifica que el servidor esté corriendo.</p>' +
+        '</div>';
+      mensaje.style.display = 'block';
+      btnConfirmar.disabled    = false;
+      btnConfirmar.textContent = '💳 Pagar con Wompi';
+    }
+  });
+}
+
+// Consulta cada 3 segundos si el pago ya fue aprobado por Wompi.
+// Máximo 20 intentos (60 segundos) antes de mostrar timeout.
+function iniciarPolling(reference, token, mensaje) {
+  btnConfirmar.textContent = 'Confirmando pago...';
+  let intentos = 0;
+
+  pollingInterval = setInterval(async function() {
+    intentos++;
+    if (intentos > 20) {
+      clearInterval(pollingInterval);
+      mostrarResultadoPago('TIMEOUT', mensaje);
+      return;
+    }
+
+    try {
+      const r = await fetch('http://localhost:3000/api/pagos/estado/' + reference, {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      const data = await r.json();
+
+      if (data.status !== 'PENDING') {
+        clearInterval(pollingInterval);
+        mostrarResultadoPago(data.status, mensaje);
+      }
+    } catch (e) {
+      console.error('Polling error', e);
+    }
+  }, 3000);
+}
+
+function mostrarResultadoPago(status, mensaje) {
+  if (status === 'APPROVED') {
+    localStorage.removeItem('carrito');
+    actualizarBadge();
+
+    mensaje.innerHTML =
+      '<div style="background:#dcfce7; border:1px solid #bbf7d0; border-radius:10px; padding:20px;">' +
+        '<p style="color:#15803d; font-weight:700; font-size:16px;">✅ ¡Pago aprobado!</p>' +
+        '<p style="color:#166534; font-size:13px; margin-top:6px;">Tu orden fue registrada en el sistema.</p>' +
+        '<a href="index.html" style="color:#15803d; font-weight:600;">← Volver al inicio</a>' +
+      '</div>';
+    mensaje.style.display = 'block';
+
+    mostrarPaginaCarrito(); // actualizar la vista del carrito (ahora vacío)
+
+  } else if (status === 'DECLINED') {
+    mensaje.innerHTML =
+      '<div style="background:#fee2e2; border:1px solid #fca5a5; border-radius:10px; padding:16px;">' +
+        '<p style="color:#991b1b; font-weight:600;">❌ Pago rechazado. Intenta con otra tarjeta.</p>' +
+      '</div>';
+    mensaje.style.display = 'block';
+    btnConfirmar.disabled    = false;
+    btnConfirmar.textContent = '💳 Pagar con Wompi';
+
+  } else {
+    mensaje.innerHTML =
+      '<div style="background:#fef9c3; border:1px solid #fde047; border-radius:10px; padding:16px;">' +
+        '<p style="color:#854d0e; font-weight:600;">⏱️ No pudimos confirmar el pago todavía. Revisa "Mis pedidos" en un momento.</p>' +
+      '</div>';
+    mensaje.style.display = 'block';
+    btnConfirmar.disabled    = false;
+    btnConfirmar.textContent = '💳 Pagar con Wompi';
+  }
 }

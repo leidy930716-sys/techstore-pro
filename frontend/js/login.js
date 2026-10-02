@@ -44,6 +44,7 @@ formLogin.addEventListener('submit', async function(evento) {
         // 4b. Login exitoso - guardar token
         localStorage.setItem('token', datos.token);
         localStorage.setItem('usuario-nombre', datos.nombre);
+        localStorage.setItem('usuario-rol', datos.rol);
 
         // 5. Mostrar mensaje de bienvenida
         const exito = document.querySelector('#login-exito');

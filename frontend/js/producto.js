@@ -8,11 +8,11 @@ async function cargarProductoDetalle() {
     const elDetalle  = document.getElementById('producto-detalle');
 
     // 2. Sin id en la URL - mostrar error
-    if (!id) { elCargando.style.display = 'none'; elError.style.display = 'block'; return; }
+    if (!id) { elCargando.style.display = 'none'; elError.style.display = 'block'; return;}
 
     try {
         // 3. Pedir el producto al backend (ruta del Paso 1)
-        const respuesta = await fetch("http://localhost:3000/api/productos/" + id);
+        const respuesta = await fetch('http://localhost:3000/api/productos/' + id);
         if (!respuesta.ok) throw new Error('No encontrado');
         const producto = await respuesta.json();
 
@@ -48,4 +48,4 @@ async function cargarProductoDetalle() {
     }
 }
 
-cargarProductoDetalle();
+document.addEventListener('DOMContentLoaded', cargarProductoDetalle);

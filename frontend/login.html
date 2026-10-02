@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | TechStore Pro</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
     <div class="barra-scroll" id="barra-scroll"></div>
     <header class="header">
@@ -26,31 +28,32 @@
             <a href="registro.html">Registro</a>
             <a href="login.html" class="active">Login</a>
         </nav>
-
-        <button id="btn-tema" class="btn-tema" aria-label="Cambiar tema">🌙</button>
+        <div class="header-acciones">
+            <a href="login.html" id="nav-login" class="btn-login-header activo">Login</a>
+            <button id="btn-tema" class="btn-tema" aria-label="Cambiar tema">🌙</button>
+            <div class="carrito-badge-contenedor">
+                <span>🛒</span>
+                <span class="carrito-badge" id="carrito-badge">0</span>
+            </div>
+        </div>
     </header>
-
-    <main>
-        <div class="page-header">
-            <p class="breadcrumb"><a href="index.html">Inicio</a> / Login</p>
-            <h1>Iniciar sesión</h1>
-            <p>Accede a tu cuenta para ver tus pedidos.</p>
+    <div class="page-header">
+        <p class="breadcrumb"><a href="index.html">Inicio</a> / Login</p>
+        <h1>Iniciar sesión</h1>
+        <p>Accede a tu cuenta para ver tus pedidos.</p>
         </div>
 
         <section style="max-width: 480px; margin: 48px auto; padding: 0 32px;">
             <form id="form-login" class="form-contacto" novalidate>
                 <div class="campo">
                     <label for="login-email">Correo electrónico</label>
-                    <input type="email" id="login-email"
-                        placeholder="correo@ejemplo.com"
-                        autocomplete="email">
+                    <input type="email" id="login-email" placeholder="correo@ejemplo.com" autocomplete="email">
                     <span class="error" id="error-login-email"></span>
                 </div>
 
                 <div class="campo">
                     <label for="login-password">Contraseña</label>
-                    <input type="password" id="login-password"
-                        placeholder="Tu contraseña"
+                    <input type="password" id="login-password" placeholder="Tu contraseña"
                         autocomplete="current-password">
                     <span class="error" id="error-login-password"></span>
                 </div>
@@ -65,31 +68,32 @@
                 ¿No tienes cuenta? <a href="registro.html">Regístrate aquí</a>
             </p>
         </section>
-    </main>
+        </main>
 
-    <footer class="footer">
-        <div class="footer-contenido">
-            <div class="footer-marca">
-                <span class="logo-icono"></span>
-                <span class="logo-texto">TechStore Pro</span>
-                <p>Tu tienda de tecnología en línea.</p>
+        <footer class="footer">
+            <div class="footer-contenido">
+                <div class="footer-marca">
+                    <span class="logo-icono"></span>
+                    <span class="logo-texto">TechStore Pro</span>
+                    <p>Tu tienda de tecnología en línea.</p>
+                </div>
+
+                <nav class="footer-nav">
+                    <h4>Páginas</h4>
+                    <a href="index.html">Inicio</a>
+                    <a href="productos.html">Productos</a>
+                    <a href="nosotros.html">Nosotros</a>
+                    <a href="contacto.html">Contacto</a>
+                </nav>
             </div>
 
-            <nav class="footer-nav">
-                <h4>Páginas</h4>
-                <a href="index.html">Inicio</a>
-                <a href="productos.html">Productos</a>
-                <a href="nosotros.html">Nosotros</a>
-                <a href="contacto.html">Contacto</a>
-            </nav>
-        </div>
+            <div class="footer-copy">
+                <p>&copy; 2026 TechStore Pro</p>
+            </div>
+        </footer>
 
-        <div class="footer-copy">
-            <p>&copy; 2026 TechStore Pro</p>
-        </div>
-    </footer>
-
-    <script src="js/main.js"></script>
-    <script src="js/login.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/login.js"></script>
 </body>
+
 </html>
