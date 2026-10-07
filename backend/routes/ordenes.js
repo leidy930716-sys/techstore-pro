@@ -20,6 +20,20 @@ router.post('/', verificarToken, async (req, res) => {
     }
 });
 
+// GET /api/ordenes - mis ordenes
+// cada usuario ve solo sus propias ordenes
+router.get('/', verificarToken, async (req, res) => {
+    try {
+        const ordenes = await Orden
+            .find({ usuario: req.usuario.id })
+            .populate('usuario', 'nombre email')
+            .populate('productos.producto', 'nombre precio');
+        res.json(ordenes);
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+});
+
 // GET /api/ordenes/admin/todas — el admin ve TODAS las órdenes de todos los usuarios
 // Declarada antes de "GET /" para no chocar con futuras rutas GET /:id
 router.get('/admin/todas', verificarToken, verificarAdmin, async (req, res) => {

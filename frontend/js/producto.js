@@ -33,7 +33,9 @@ async function cargarProductoDetalle() {
 
         // 6. Botón agregar al carrito - agregarAlCarrito() viene de main.js
         document.getElementById('btn-agregar-carrito').addEventListener('click', function() {
-            agregarAlCarrito({ id: producto._id, nombre: producto.nombre,
+            agregarAlCarrito({ 
+                id: producto._id, 
+                nombre: producto.nombre,
                 precio: producto.precio, icono: producto.icono || '📦',
                 imagen: producto.imagen || '', fecha: new Date().toLocaleDateString('es-CO') });
             const msg = document.getElementById('producto-mensaje');

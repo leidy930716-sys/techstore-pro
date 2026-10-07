@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,17 +10,14 @@
 <body>
 
     <div class="barra-scroll" id="barra-scroll"></div>
-
     <header class="header">
         <div class="header-logo">
-            <span class="logo-icono"></span>
+            <span class="logo-icono">💻</span>
             <span class="logo-texto">TechStore Pro</span>
         </div>
-
         <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
             <span></span><span></span><span></span>
         </button>
-
         <nav id="nav-menu" class="nav-menu">
             <a href="index.html">Inicio</a>
             <a href="productos.html">Productos</a>
@@ -29,7 +25,6 @@
             <a href="contacto.html">Contacto</a>
             <a href="registro.html">Registro</a>
         </nav>
-
         <div class="header-acciones">
             <a href="login.html" id="nav-login" class="btn-login-header">Login</a>
             <button id="btn-tema" class="btn-tema" aria-label="Cambiar tema">🌙</button>
@@ -42,8 +37,10 @@
 
     <main>
         <div class="pedidos-contenedor">
-            <h1 class="pedidos-titulo">Mis Pedidos</h1>
-            <p class="pedidos-subtitulo">Historial de todas tus órdenes</p>
+            <h1 class="pedidos-titulo">📦 Mis Pedidos</h1>
+            <p class="pedidos-subtitulo">
+                Historial de todas tus órdenes
+            </p>
             <!-- mispedidos.js llena este div con tarjetas o mensajes de error -->
             <div id="pedidos-lista">
                 <p>⏳ Cargando pedidos...</p>
@@ -54,19 +51,17 @@
     <footer class="footer">
         <div class="footer-contenido">
             <div class="footer-marca">
-                <span class="logo-icono">🌐</span>
+                <span class="logo-icono">💻</span>
                 <span class="logo-texto">TechStore Pro</span>
                 <p>Tu tienda de tecnología en línea.</p>
             </div>
-
-            <div class="footer-nav">
+            <nav class="footer-nav">
                 <h4>Páginas</h4>
                 <a href="index.html">Inicio</a>
                 <a href="productos.html">Productos</a>
                 <a href="nosotros.html">Nosotros</a>
                 <a href="contacto.html">Contacto</a>
-            </div>
-
+            </nav>
             <div class="footer-contacto">
                 <h4>Contacto</h4>
                 <p>📍 Ciudad, Departamento</p>
@@ -74,16 +69,13 @@
                 <p>✉️ info@techstorepro.co</p>
             </div>
         </div>
-
         <div class="footer-copy">
-            <p>&copy; 2026 TechStore Pro - Todos los derechos reservados</p>
+            <p>&copy; 2026 TechStore Pro – Todos los derechos reservados</p>
         </div>
     </footer>
-
     <script src="js/main.js"></script>
     <script src="js/timeline.js"></script>
     <script src="js/mispedidos.js"></script>
 
 </body>
-
 </html>

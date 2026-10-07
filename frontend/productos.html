@@ -4,73 +4,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- ✏️ Cambia el título: "Productos | Mi Tienda" o "Servicios | Mi Empresa" -->
   <title>Productos | TechStore Pro</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
-  <!-- BARRA SCROLL — S06: div vacío, el CSS lo posiciona y el JS le da el ancho -->
+  <!-- BARRA SCROLL -->
   <div class="barra-scroll" id="barra-scroll"></div>
 
-  <!-- ============================================================
-      HEADER — Igual en todas las páginas
-      Cambia class="activo" al enlace "Productos"
-      ============================================================ -->
+  <!-- HEADER -->
   <header class="header">
     <div class="header-logo">
       <span class="logo-icono">💻</span>
       <span class="logo-texto">TechStore Pro</span>
     </div>
+
     <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
-      <span></span><span></span><span></span>
+      <span></span>
+      <span></span>
+      <span></span>
     </button>
+
     <nav id="nav-menu" class="nav-menu">
       <a href="index.html">Inicio</a>
       <a href="productos.html" class="activo">Productos</a>
       <a href="nosotros.html">Nosotros</a>
       <a href="contacto.html">Contacto</a>
       <a href="registro.html">Registro</a>
-      <a href="login.html">Login</a>
     </nav>
+
     <div class="header-acciones">
+      <!-- NUEVO - antes del btn-tema -->
       <a href="login.html" id="nav-login" class="btn-login-header">Login</a>
       <button id="btn-tema" class="btn-tema" aria-label="Cambiar tema">🌙</button>
-      <div class="carrito-badge-contenedor">
+      <a href="carrito.html" class="carrito-badge-contenedor" aria-label="Ver carrito">
         <span>🛒</span>
         <span class="carrito-badge" id="carrito-badge">0</span>
-      </div>
+      </a>
     </div>
   </header>
-  <main>
 
-    <!-- --------------------------------------------------------
-        PAGE HEADER — Título de la página
-        -------------------------------------------------------- -->
+  <!-- MAIN -->
+  <main>
     <div class="page-header">
       <p class="breadcrumb"><a href="index.html">Inicio</a> / Productos</p>
       <h1>Catálogo de Productos</h1>
       <p>Laptops, celulares y componentes al mejor precio. Envío a todo el Huila.</p>
     </div>
 
-    <!-- --------------------------------------------------------
-        CATÁLOGO COMPLETO
-        id="grid-tarjetas" lo usará JavaScript para cargar
-        todos los productos desde un array de datos
-      -------------------------------------------------------- -->
-
-
     <section class="seccion-tarjetas">
       <input type="text" id="buscador" placeholder="🔍 Buscar producto..."
         style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;font-size:16px;margin-bottom:24px;">
+
       <div class="grid-tarjetas" id="grid-tarjetas">
-
-      </div><!-- /grid-tarjetas -->
+        <!-- Las tarjetas se generan con JavaScript -->
+      </div>
     </section>
-
   </main>
 
-  <!-- Footer — igual en todas las páginas -->
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-contenido">
       <div class="footer-marca">
@@ -84,6 +76,7 @@
         <a href="productos.html">Productos</a>
         <a href="nosotros.html">Nosotros</a>
         <a href="contacto.html">Contacto</a>
+        <a href="registro.html">Registro</a>
       </nav>
       <div class="footer-contacto">
         <h4>Contacto</h4>
@@ -97,7 +90,7 @@
     </div>
   </footer>
 
-  <!-- MODAL PRODUCTO — S06 -->
+  <!-- MODAL PRODUCTO -->
   <div class="modal-overlay" id="modal-producto">
     <div class="modal-caja">
       <button class="modal-cerrar" id="modal-cerrar">×</button>
@@ -110,9 +103,6 @@
   </div>
 
   <script src="js/main.js"></script>
-
-
-
 </body>
 
 </html>

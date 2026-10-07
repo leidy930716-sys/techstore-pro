@@ -1,47 +1,144 @@
 /* ============================================================
-    ARIABLES CSS — ✏️ PERSONALIZA ESTOS COLORES
-    on los colores de tu proyecto. Cámbialos aquí y se
-    ctualizan en toda la página automáticamente.
+   VARIABLES CSS
    ============================================================ */
 :root {
-  /* ✏️ Color principal de tu marca (botones, enlaces activos, acentos) */
   --color-primario: #2563eb;
-
-  /* ✏️ Color secundario (hover, detalles) */
   --color-secundario: #1d4ed8;
-
-  /* ✏️ Color oscuro (header, footer, textos) */
   --color-oscuro: #1e293b;
-
-  /* ✏️ Color de fondo general de la página */
   --color-fondo: #f8fafc;
-
-  /* ✏️ Color de fondo de las tarjetas */
   --color-blanco: #ffffff;
-
-  /* ✏️ Color del texto principal */
   --color-texto: #334155;
-
-  /* ✏️ Color del texto secundario / descripciones */
   --color-texto-suave: #64748b;
-
-  /* ✏️ Color del borde de tarjetas y separadores */
   --color-borde: #e2e8f0;
-
-  /* Radio de bordes (no es necesario cambiar) */
   --radio: 10px;
   --radio-grande: 16px;
-
-  /* Sombra suave para tarjetas */
   --sombra: 0 2px 12px rgba(0, 0, 0, 0.07);
   --sombra-hover: 0 8px 28px rgba(0, 0, 0, 0.13);
-
-  /* Altura del header (usada para el top del sticky) */
   --alto-header: 68px;
 }
 
+/* ... (todos tus estilos existentes) ... */
+
 /* ============================================================
-    RESET Y BASE
+   TEMA OSCURO - Estilos base
+   ============================================================ */
+body.tema-oscuro {
+  --color-fondo: #0f172a;
+  --color-blanco: #1e293b;
+  --color-texto: #e2e8f0;
+  --color-texto-suave: #94a3b8;
+  --color-borde: #334155;
+}
+
+body.tema-oscuro .seccion-header h2 {
+  color: #f1f5f9;
+}
+
+body.tema-oscuro .tarjeta {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.tema-oscuro .tarjeta-nombre {
+  color: #f1f5f9;
+}
+
+body.tema-oscuro .modal-caja {
+  background: #1e293b;
+  color: #f1f5f9;
+}
+
+body.tema-oscuro .modal-titulo {
+  color: #f1f5f9;
+}
+
+body.tema-oscuro .modal-desc {
+  color: #94a3b8;
+}
+
+body.tema-oscuro .miembro {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.tema-oscuro .miembro h3 {
+  color: #f1f5f9;
+}
+
+/* ============================================================
+   SOLUCIONES PARA MODO OSCURO - NOSOTROS Y CONTACTO
+   ============================================================ */
+
+/* 1. Títulos de la sección "Nuestra historia" en modo oscuro */
+body.tema-oscuro .mision-texto h2 {
+  color: #f1f5f9;
+}
+
+/* 2. Texto descriptivo de la historia */
+body.tema-oscuro .mision-texto p {
+  color: #cbd5e1;
+}
+
+/* 3. Labels del formulario de contacto en modo oscuro */
+body.tema-oscuro .campo label {
+  color: #e2e8f0;
+}
+
+/* 4. Texto del formulario en modo oscuro */
+body.tema-oscuro .form-contacto h2 {
+  color: #f1f5f9;
+}
+
+body.tema-oscuro .form-contacto>p {
+  color: #94a3b8;
+}
+
+/* 5. Campos de entrada en modo oscuro */
+body.tema-oscuro .campo input,
+body.tema-oscuro .campo textarea,
+body.tema-oscuro .campo select {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-color: #475569;
+}
+
+body.tema-oscuro .campo input::placeholder,
+body.tema-oscuro .campo textarea::placeholder {
+  color: #94a3b8;
+}
+
+body.tema-oscuro .campo input:focus,
+body.tema-oscuro .campo textarea:focus,
+body.tema-oscuro .campo select:focus {
+  background: #1e293b;
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+/* 6. Datos de contacto en modo oscuro */
+body.tema-oscuro .dato-item {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.tema-oscuro .dato-item h4 {
+  color: #f1f5f9;
+}
+
+body.tema-oscuro .dato-item p {
+  color: #cbd5e1;
+}
+
+body.tema-oscuro .dato-item a {
+  color: #60a5fa;
+}
+
+body.tema-oscuro .dato-item a:hover {
+  color: #93c5fd;
+}
+
+/* ============================================================
+   RESET Y BASE
    ============================================================ */
 *,
 *::before,
@@ -79,7 +176,7 @@ a:hover {
 }
 
 /* ============================================================
-    HEADER
+   HEADER
    ============================================================ */
 .header {
   background-color: var(--color-oscuro);
@@ -88,16 +185,12 @@ a:hover {
   position: sticky;
   top: 0;
   z-index: 100;
-
-  /* Flexbox: logo izquierda · hamburguesa + nav derecha */
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Logo */
 .header-logo {
   display: flex;
   align-items: center;
@@ -113,11 +206,9 @@ a:hover {
   font-size: 18px;
   font-weight: 800;
   color: white;
-  /* ✏️ Puedes cambiar el color del texto del logo */
   white-space: nowrap;
 }
 
-/* Navegación */
 .nav-menu {
   display: flex;
   gap: 6px;
@@ -138,13 +229,12 @@ a:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Enlace activo — página actual */
 .nav-menu a.activo {
   color: white;
   background: var(--color-primario);
 }
 
-/* Botón Login en el header - derecha */
+/* Boton login en el header - derecha */
 .btn-login-header {
   font-size: 13px;
   font-weight: 700;
@@ -152,18 +242,21 @@ a:hover {
   background: var(--color-primario);
   padding: 7px 18px;
   border-radius: 8px;
-  transition: opacity .2s;
+  transition: background-color .2s ease, transform .2s ease;
   white-space: nowrap;
+  will-change: transform;
+  -webkit-font-smoothing: antialiased;
 }
 
 .btn-login-header:hover {
+  background: color-mix(in srgb, var(--color-primario) 85%, black);
+  transform: scale(1.03);
   opacity: .85;
+  color: white;
 }
 
-/* Botón hamburguesa — visible solo en móvil */
 .menu-toggle {
   display: none;
-  /* Se muestra en el media query de abajo */
   flex-direction: column;
   gap: 5px;
   background: none;
@@ -187,8 +280,14 @@ a:hover {
   transition: all .3s;
 }
 
+.header-acciones {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 /* ============================================================
-    BOTONES
+   BOTONES
    ============================================================ */
 .btn {
   display: inline-block;
@@ -231,12 +330,10 @@ a:hover {
    HERO
    ============================================================ */
 .hero {
-  /* ✏️ Cambia el gradiente por los colores de tu proyecto */
   background: linear-gradient(135deg, var(--color-oscuro) 0%, #1e3a5f 100%);
   color: white;
   padding: 100px 32px;
   min-height: 500px;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -259,7 +356,6 @@ a:hover {
 }
 
 .hero-destacado {
-  /* ✏️ Color del texto destacado en el hero */
   color: #93c5fd;
 }
 
@@ -324,11 +420,12 @@ a:hover {
   background: var(--color-blanco);
   border: 1px solid var(--color-borde);
   border-radius: var(--radio-grande);
-  overflow: visible;
+  overflow: hidden;
   box-shadow: var(--sombra);
   transition: transform .25s, box-shadow .25s;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .tarjeta:hover {
@@ -392,17 +489,17 @@ a:hover {
 
 .btn-accion:hover {
   background: var(--color-secundario);
+  color: #e9edfe;
   transform: translateY(-1px);
 }
 
 /* ============================================================
-   SECCIÓN ABOUT (mini — index.html)
+   SECCIÓN ABOUT
    ============================================================ */
 .seccion-about {
   background: var(--color-oscuro);
   color: white;
   padding: 80px 32px;
-
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 60px;
@@ -442,7 +539,6 @@ a:hover {
   font-size: 40px;
   font-weight: 800;
   color: var(--color-primario);
-  /* ✏️ Puedes cambiar el color de las estadísticas */
   line-height: 1;
 }
 
@@ -530,7 +626,7 @@ a:hover {
 }
 
 /* ============================================================
-   ESTILOS PÁGINA PRODUCTOS (productos.html)
+   PAGE HEADER
    ============================================================ */
 .page-header {
   background: var(--color-oscuro);
@@ -567,7 +663,7 @@ a:hover {
 }
 
 /* ============================================================
-   ESTILOS PÁGINA NOSOTROS (nosotros.html)
+   PÁGINA NOSOTROS
    ============================================================ */
 .seccion-mision {
   padding: 80px 32px;
@@ -619,7 +715,6 @@ a:hover {
   color: var(--color-texto-suave);
 }
 
-/* Grid del equipo */
 .seccion-equipo {
   background: var(--color-fondo);
   padding: 80px 32px;
@@ -687,7 +782,7 @@ a:hover {
 }
 
 /* ============================================================
-   ESTILOS PÁGINA CONTACTO (contacto.html)
+   PÁGINA CONTACTO
    ============================================================ */
 .seccion-contacto {
   padding: 80px 32px;
@@ -713,7 +808,7 @@ a:hover {
 .form-contacto h2 {
   font-size: 26px;
   font-weight: 800;
-  color: var(--color-oscuro);
+  color: var(--color-texto);
   margin-bottom: 4px;
 }
 
@@ -723,7 +818,6 @@ a:hover {
   margin-bottom: 8px;
 }
 
-/* Campos del formulario */
 .campo {
   display: flex;
   flex-direction: column;
@@ -758,14 +852,12 @@ a:hover {
   background: white;
 }
 
-/* Estado de error — JavaScript agrega esta clase */
 .campo.tiene-error input,
 .campo.tiene-error textarea {
   border-color: #ef4444;
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
 }
 
-/* Mensaje de error — JavaScript escribe el texto aquí */
 .campo .error {
   font-size: 12px;
   color: #ef4444;
@@ -796,7 +888,6 @@ a:hover {
   transform: translateY(-1px);
 }
 
-/* Columna de datos de contacto */
 .datos-contacto {
   display: flex;
   flex-direction: column;
@@ -834,156 +925,116 @@ a:hover {
 }
 
 /* ============================================================
-   RESPONSIVE — TABLET (768px)
+   BADGE CARRITO
    ============================================================ */
-@media (max-width: 768px) {
+.carrito-badge-contenedor {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: white;
+  transition: opacity 0.2s;
+}
 
-  /* Header: mostrar botón hamburguesa, ocultar nav */
-  .menu-toggle {
-    display: flex;
-  }
+.carrito-badge-contenedor:hover {
+  opacity: 0.8;
+}
 
-  .nav-menu {
-    display: none;
-    position: absolute;
-    top: var(--alto-header);
-    left: 0;
-    right: 0;
-    transform: none;
-    background: var(--color-oscuro);
-    flex-direction: column;
-    padding: 16px;
-    gap: 4px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  }
+.carrito-badge-contenedor>span:first-child {
+  font-size: 18px;
+  line-height: 1;
+}
 
-  /* JavaScript agrega .open al nav-menu */
-  .nav-menu.open {
-    display: flex;
-  }
+.carrito-badge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: var(--color-primario);
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
 
-  .nav-menu a {
-    padding: 12px 16px;
-    border-radius: 8px;
-  }
-
-  /* Grid tarjetas: 3 → 2 columnas */
-  .grid-tarjetas {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  /* About: 2 → 1 columna */
-  .seccion-about {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    padding: 60px 24px;
-  }
-
-  /* Footer: 3 → 1 columna */
-  .footer-contenido {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  /* Nosotros misión: 2 → 1 columna */
-  .seccion-mision {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    padding: 60px 24px;
-  }
-
-  /* Equipo: 3 → 2 columnas */
-  .grid-equipo {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  /* Contacto: 2 → 1 columna */
-  .seccion-contacto {
-    grid-template-columns: 1fr;
-    padding: 60px 24px;
-  }
-
-  /* Padding general */
-  .seccion-tarjetas {
-    padding: 60px 24px;
-  }
-
-  .seccion-equipo {
-    padding: 60px 24px;
-  }
-
-  .hero {
-    padding: 80px 24px;
-  }
-
+.carrito-badge.oculto {
+  display: none;
 }
 
 /* ============================================================
-   RESPONSIVE — MÓVIL (480px)
+   BOTÓN TEMA
    ============================================================ */
-@media (max-width: 480px) {
-
-  .header {
-    padding: 0 16px;
-  }
-
-  /* Grid tarjetas: 2 → 1 columna */
-  .grid-tarjetas {
-    grid-template-columns: 1fr;
-  }
-
-  /* Equipo: 2 → 1 columna */
-  .grid-equipo {
-    grid-template-columns: 1fr;
-    max-width: 340px;
-  }
-
-  /* Estadísticas del about */
-  .about-stats {
-    gap: 24px;
-  }
-
-  .stat-numero {
-    font-size: 32px;
-  }
-
-  /* Hero */
-  .hero {
-    padding: 60px 16px;
-    min-height: auto;
-  }
-
-  .hero-acciones {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .hero-acciones .btn {
-    width: 100%;
-    text-align: center;
-  }
-
-  /* Formulario */
-  .form-contacto {
-    padding: 24px 16px;
-  }
-
-  .btn-enviar {
-    width: 100%;
-  }
-
-  .page-header {
-    padding: 40px 16px;
-  }
-
-  .seccion-tarjetas {
-    padding: 40px 16px;
-  }
-
+.btn-tema {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 15px;
+  color: white;
+  transition: background 0.2s, border-color 0.2s;
+  line-height: 1;
 }
 
-/* ── MODAL PRODUCTO · S06 ─────────────────────────── */
+.btn-tema:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* ============================================================
+   TEMA OSCURO
+   ============================================================ */
+body.tema-oscuro {
+  --color-fondo: #0f172a;
+  --color-blanco: #1e293b;
+  --color-texto: #e2e8f0;
+  --color-texto-suave: #94a3b8;
+  --color-borde: #334155;
+}
+
+body.tema-oscuro .seccion-header h2 {
+  color: #f1f5f9;
+}
+
+body.tema-oscuro .tarjeta {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.tema-oscuro .tarjeta-nombre {
+  color: #f1f5f9;
+}
+
+body.tema-oscuro .modal-caja {
+  background: #1e293b;
+  color: #f1f5f9;
+}
+
+body.tema-oscuro .modal-titulo {
+  color: #f1f5f9;
+}
+
+body.tema-oscuro .modal-desc {
+  color: #94a3b8;
+}
+
+body.tema-oscuro .miembro {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.tema-oscuro .miembro h3 {
+  color: #f1f5f9;
+}
+
+/* ============================================================
+   MODAL PRODUCTO
+   ============================================================ */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -1070,7 +1121,9 @@ a:hover {
   background: #2d8400;
 }
 
-/* ── BARRA DE PROGRESO SCROLL · S06 ──────────────── */
+/* ============================================================
+   BARRA DE PROGRESO SCROLL
+   ============================================================ */
 .barra-scroll {
   position: fixed;
   top: 0;
@@ -1082,16 +1135,13 @@ a:hover {
   transition: width 0.1s;
 }
 
-/* ── BADGE HOVER TARJETA · S06 ───────────────────── */
-.tarjeta {
-  position: relative;
-  /* necesario para posicionar el badge */
-}
-
+/* ============================================================
+   BADGE DISPONIBLE
+   ============================================================ */
 .badge-disponible {
   position: absolute;
-  top: -10px;
-  right: -10px;
+  top: 10px;
+  right: 10px;
   background: #39a900;
   color: #fff;
   font-size: 11px;
@@ -1106,102 +1156,9 @@ a:hover {
   display: inline-block;
 }
 
-.header-acciones {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* ===== S07: TEMA OSCURO ===== */
-
-/* Mismo padding que los links del nav — así queda alineado */
-.btn-tema {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  padding: 8px 12px;
-  cursor: pointer;
-  font-size: 15px;
-  color: white;
-  transition: background 0.2s, border-color 0.2s;
-  line-height: 1;
-}
-
-.btn-tema:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.4);
-}
-
-/* Variables del tema oscuro */
-body.tema-oscuro {
-  --color-fondo: #0f172a;
-  --color-blanco: #1e293b;
-  --color-texto: #e2e8f0;
-  --color-texto-suave: #94a3b8;
-  --color-borde: #334155;
-}
-
-body.tema-oscuro .seccion-header h2 {
-  color: #f1f5f9;
-}
-
-body.tema-oscuro .tarjeta {
-  background: #1e293b;
-  border-color: #334155;
-}
-
-body.tema-oscuro .tarjeta-nombre {
-  color: #f1f5f9;
-}
-
-body.tema-oscuro .modal-caja {
-  background: #1e293b;
-  color: #f1f5f9;
-}
-
-body.tema-oscuro .modal-titulo {
-  color: #f1f5f9;
-}
-
-body.tema-oscuro .modal-desc {
-  color: #94a3b8;
-}
-
-/* ===== S07: BADGE CARRITO ===== */
-.carrito-badge-contenedor {
-  position: relative;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.carrito-badge-contenedor>span:first-child {
-  font-size: 18px;
-  line-height: 1;
-}
-
-.carrito-badge {
-  position: absolute;
-  top: -8px;
-  right: -10px;
-  background: var(--color-primario);
-  color: white;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  font-size: 11px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-}
-
-.carrito-badge.oculto {
-  display: none;
-}
-
-/* ===== S07: PÁGINA CARRITO ===== */
+/* ============================================================
+   PÁGINA CARRITO
+   ============================================================ */
 .seccion-carrito {
   max-width: 800px;
   margin: 60px auto;
@@ -1223,21 +1180,13 @@ body.tema-oscuro .modal-desc {
   font-size: 32px;
 }
 
-.carrito-item-img {
-  width: 70px;
-  height: 70px;
-  object-fit: cover;
-  border-radius: 8px;
-  flex-shrink: 0;
-}
-
 .carrito-item-info {
   flex: 1;
 }
 
 .carrito-item-nombre {
   font-weight: 700;
-  color: var(--color-oscuro);
+  color: var(--color-texto);
 }
 
 .carrito-item-precio {
@@ -1248,6 +1197,14 @@ body.tema-oscuro .modal-desc {
 .carrito-item-fecha {
   font-size: 12px;
   color: var(--color-texto-suave);
+}
+
+.carrito-item-img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
 }
 
 .carrito-acciones {
@@ -1263,6 +1220,22 @@ body.tema-oscuro .modal-desc {
   color: var(--color-texto-suave);
 }
 
+.btn-eliminar {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-eliminar:hover {
+  background: #dc2626;
+}
+
 /* ===== S08: ERROR FETCH ===== */
 .error-fetch {
   grid-column: 1 / -1;
@@ -1276,10 +1249,258 @@ body.tema-oscuro .modal-desc {
   gap: 16px;
 }
 
-/*===================================
-  S17d. PAGINA DE PRODUCTO INDIVIDUAL
-  Aplica solo en producto.html
-===================================*/
+/* ============================================================
+   RESPONSIVE - TABLET
+   ============================================================ */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: flex;
+  }
+
+  .nav-menu {
+    display: none;
+    position: absolute;
+    top: var(--alto-header);
+    left: 0;
+    right: 0;
+    transform: none;
+    /* Nuevo -  cancela el translateX(-50%) del desktop */
+    background: var(--color-oscuro);
+    flex-direction: column;
+    padding: 16px;
+    gap: 4px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  .nav-menu.open {
+    display: flex;
+  }
+
+  .nav-menu a {
+    padding: 12px 16px;
+    border-radius: 8px;
+  }
+
+  .grid-tarjetas {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .seccion-about {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 60px 24px;
+  }
+
+  .footer-contenido {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .seccion-mision {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 60px 24px;
+  }
+
+  .grid-equipo {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .seccion-contacto {
+    grid-template-columns: 1fr;
+    padding: 60px 24px;
+  }
+
+  .seccion-tarjetas {
+    padding: 60px 24px;
+  }
+
+  .seccion-equipo {
+    padding: 60px 24px;
+  }
+
+  .hero {
+    padding: 80px 24px;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE - MÓVIL
+   ============================================================ */
+@media (max-width: 480px) {
+  .header {
+    padding: 0 16px;
+  }
+
+  .grid-tarjetas {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-equipo {
+    grid-template-columns: 1fr;
+    max-width: 340px;
+  }
+
+  .about-stats {
+    gap: 24px;
+  }
+
+  .stat-numero {
+    font-size: 32px;
+  }
+
+  .hero {
+    padding: 60px 16px;
+    min-height: auto;
+  }
+
+  .hero-acciones {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-acciones .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .form-contacto {
+    padding: 24px 16px;
+  }
+
+  .btn-enviar {
+    width: 100%;
+  }
+
+  .page-header {
+    padding: 40px 16px;
+  }
+
+  .seccion-tarjetas {
+    padding: 40px 16px;
+  }
+
+  .seccion-carrito {
+    padding: 0 16px;
+  }
+}
+
+/* ============================================================
+   SOLUCIONES PARA MODO OSCURO
+   ============================================================ */
+
+/* 1. Títulos de la sección "Nuestra historia" en modo oscuro */
+body.tema-oscuro .mision-texto h2 {
+  color: #f1f5f9;
+  /* Blanco para que se vea bien */
+}
+
+/* 2. Texto descriptivo de la historia */
+body.tema-oscuro .mision-texto p {
+  color: #cbd5e1;
+  /* Gris claro para buena legibilidad */
+}
+
+/* 3. Labels del formulario de contacto en modo oscuro */
+body.tema-oscuro .campo label {
+  color: #e2e8f0;
+  /* Blanco suave para los labels */
+}
+
+/* 4. Texto del formulario en modo oscuro */
+body.tema-oscuro .form-contacto h2 {
+  color: #f1f5f9;
+  /* Título del formulario en blanco */
+}
+
+body.tema-oscuro .form-contacto>p {
+  color: #94a3b8;
+  /* Texto descriptivo en gris claro */
+}
+
+/* 5. Campos de entrada en modo oscuro */
+body.tema-oscuro .campo input,
+body.tema-oscuro .campo textarea,
+body.tema-oscuro .campo select {
+  background: #1e293b;
+  /* Fondo oscuro para inputs */
+  color: #e2e8f0;
+  /* Texto blanco */
+  border-color: #475569;
+  /* Borde visible */
+}
+
+body.tema-oscuro .campo input::placeholder,
+body.tema-oscuro .campo textarea::placeholder {
+  color: #94a3b8;
+  /* Placeholder en gris */
+}
+
+body.tema-oscuro .campo input:focus,
+body.tema-oscuro .campo textarea:focus,
+body.tema-oscuro .campo select:focus {
+  background: #1e293b;
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+/* 6. Datos de contacto en modo oscuro */
+body.tema-oscuro .dato-item {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.tema-oscuro .dato-item h4 {
+  color: #f1f5f9;
+  /* Títulos de los datos de contacto en blanco */
+}
+
+body.tema-oscuro .dato-item p {
+  color: #cbd5e1;
+  /* Texto de los datos de contacto en gris claro */
+}
+
+body.tema-oscuro .dato-item a {
+  color: #60a5fa;
+  /* Enlaces en azul claro */
+}
+
+body.tema-oscuro .dato-item a:hover {
+  color: #93c5fd;
+}
+
+/* ============================================================
+   CORRECCIÓN PARA MODO OSCURO - MISIÓN, VISIÓN Y VALORES
+   ============================================================ */
+
+/* Títulos de Misión, Visión y Valores en modo oscuro */
+body.tema-oscuro .valor h3 {
+  color: #f1f5f9;
+  /* Blanco para que se vean bien */
+}
+
+/* Texto descriptivo de Misión, Visión y Valores */
+body.tema-oscuro .valor p {
+  color: #cbd5e1;
+  /* Gris claro para buena legibilidad */
+}
+
+/* Fondo de las tarjetas de valores en modo oscuro */
+body.tema-oscuro .valor {
+  background: #1e293b;
+  /* Fondo oscuro consistente */
+  border-color: #334155;
+  /* Borde visible */
+  border-left-color: var(--color-primario);
+  /* Mantener el borde azul */
+}
+
+/*#resumen-registro {
+  color: black;
+}*/
+
+/* S17d: PAGINA DE PRODUCTO INDIVIDUAL, aplica solo en producto.html */
 
 /* Contenedor principal - imagen a la izquierda, info a la derecha */
 .producto-detalle {
@@ -1290,18 +1511,18 @@ body.tema-oscuro .modal-desc {
   /* lado a lado en desktop */
   gap: 48px;
   flex-wrap: wrap;
-  /* apilados en movil */
+  /* apilados en mobile */
   align-items: flex-start;
 }
 
-/* Lado izquierdo - imagen del producto */
+/* lado izquierdo - imagen del producto */
 .producto-imagen-wrap {
   flex: 1 1 300px;
   /* crece, pero minimo 300px */
   max-width: 400px;
 }
 
-/* La imagen ocupa todo el ancho de su contenedor */
+/* la imagen ocupa todo el ancho de su contenedor */
 .producto-imagen-wrap img {
   width: 100%;
   border-radius: 16px;
@@ -1309,11 +1530,10 @@ body.tema-oscuro .modal-desc {
   object-fit: cover;
 }
 
-/* Si no hay imagen, mostrar el emoji centrado en un cuadrado */
+/* si no hay imagen, mostrar el emoji centrado en un cuadrado */
 .producto-imagen-placeholder {
   width: 100%;
   aspect-ratio: 1;
-  /* cuadrado perfecto */
   background: #f3f4f6;
   border-radius: 16px;
   display: flex;
@@ -1322,20 +1542,20 @@ body.tema-oscuro .modal-desc {
   font-size: 80px;
 }
 
-/* Lado derecho - informacion del producto */
+/* lado derecho - informacion del producto */
 .producto-info {
   flex: 1 1 280px;
 }
 
-/* Nombre grande del producto */
-.producto-nombre {
+/* nombre grande del producto */
+.producto-precio {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 12px;
   line-height: 1.2;
 }
 
-/* Precio destacado en azul */
+/* precio destacado en azul */
 .producto-precio {
   font-size: 1.6rem;
   font-weight: 700;
@@ -1343,21 +1563,21 @@ body.tema-oscuro .modal-desc {
   margin-bottom: 20px;
 }
 
-/* Descripcion con buena legibilidad */
+/* descripcion con buena legibilidad */
 .producto-descripcion {
   color: #4b5563;
   line-height: 1.7;
   margin-bottom: 28px;
 }
 
-/* Fila de botones de accion */
+/* fila de botones de accion */
 .producto-acciones {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
 }
 
-/* Estados de carga y error - centrados en la pagina */
+/* estados de carga y error - centrado en la pagina */
 .producto-cargando,
 .producto-error {
   max-width: 600px;
@@ -1366,7 +1586,7 @@ body.tema-oscuro .modal-desc {
   text-align: center;
 }
 
-/* Boton "<- Volver a productos" con borde */
+/* Boton "- volver a productos" con borde */
 .btn-volver {
   display: inline-flex;
   align-items: center;
@@ -1384,7 +1604,7 @@ body.tema-oscuro .modal-desc {
   border-color: #6b7280;
 }
 
-/* -- Modo oscuro -- */
+/* Modo oscuro */
 .tema-oscuro .producto-imagen-placeholder {
   background: #1f2937;
 }
@@ -1394,7 +1614,7 @@ body.tema-oscuro .modal-desc {
 }
 
 .tema-oscuro .btn-volver {
-  color: #e5e7eb;
+  color: #d1d5db;
   border-color: #374151;
 }
 
@@ -1402,16 +1622,121 @@ body.tema-oscuro .modal-desc {
   border-color: #6b7280;
 }
 
-/* ==========================================
-  S17D: PÁGINA MIS PEDIDOS
-  Aplica solo en mispedidos.html
-========================================== */
+/* 517: PAGINA MIS PEDIDOS
+   Aplica solo en mispedidos.html
+*/
+
+/* Línea de tiempo del pedido — usada en mispedidos.js y admin.js (js/timeline.js) */
+.timeline-pedido {
+  display: flex;
+  align-items: center;
+  margin: 16px 0;
+  padding-top: 12px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.timeline-paso {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.timeline-punto {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  background: #f3f4f6;
+  border: 2px solid #e5e7eb;
+  filter: grayscale(1);
+  opacity: 0.5;
+}
+
+.timeline-texto {
+  font-size: 0.7rem;
+  color: #9ca3af;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.timeline-linea {
+  flex: 1;
+  height: 2px;
+  background: #e5e7eb;
+  margin: 0 4px;
+  margin-bottom: 22px;
+}
+
+.timeline-paso.completado .timeline-punto,
+.timeline-paso.activo .timeline-punto {
+  filter: none;
+  opacity: 1;
+  background: #dcfce7;
+  border-color: #166534;
+}
+
+.timeline-paso.completado .timeline-texto,
+.timeline-paso.activo .timeline-texto {
+  color: #166534;
+}
+
+.timeline-paso.activo .timeline-punto {
+  background: #39a900;
+  border-color: #2d8400;
+  box-shadow: 0 0 0 4px rgba(57, 169, 0, 0.15);
+}
+
+.timeline-paso.activo .timeline-texto {
+  color: #2d8400;
+  font-weight: 800;
+}
+
+/* modo oscuro */
+.tema-oscuro .timeline-pedido {
+  border-color: #374151;
+}
+
+.tema-oscuro .timeline-punto {
+  background: #374151;
+  border-color: #4b5563;
+}
+
+.tema-oscuro .timeline-texto {
+  color: #6b7280;
+}
+
+.tema-oscuro .timeline-linea {
+  background: #374151;
+}
+
+.tema-oscuro .timeline-paso.completado .timeline-punto,
+.tema-oscuro .timeline-paso.activo .timeline-punto {
+  background: #14432a;
+  border-color: #22c55e;
+}
+
+.tema-oscuro .timeline-paso.completado .timeline-texto,
+.tema-oscuro .timeline-paso.activo .timeline-texto {
+  color: #86efac;
+}
+
+.tema-oscuro .timeline-paso.activo .timeline-punto {
+  background: #39a900;
+  border-color: #86efac;
+}
+
 
 /* Contenedor principal centrado */
 .pedidos-contenedor {
-  max-width: 800px;
+  max-width: 900px;
   margin: 40px auto;
-  padding: 0 24px;
+  padding: 0 20px;
 }
 
 .pedidos-titulo {
@@ -1421,12 +1746,11 @@ body.tema-oscuro .modal-desc {
 }
 
 .pedidos-subtitulo {
-  color: #6b7280;
+  color: #b7b7b7;
   margin-bottom: 32px;
 }
 
-
-/* Cada pedido es una tarjeta con borde */
+/* Cada pedido se muestra como una card */
 .pedido-card {
   border: 1px solid #e5e7eb;
   border-radius: 14px;
@@ -1447,14 +1771,14 @@ body.tema-oscuro .modal-desc {
 
 /* ID del pedido en fuente monospace y gris claro */
 .pedido-id {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: #9ca3af;
   font-family: monospace;
 }
 
 .pedido-fecha {
   font-size: 0.85rem;
-  color: #6b7280;
+  color: #b7b7b0;
 }
 
 /* Badge de estado con colores semánticos */
@@ -1462,21 +1786,33 @@ body.tema-oscuro .modal-desc {
   display: inline-block;
   padding: 4px 12px;
   border-radius: 999px;
-  /* píldora redondeada */
+  /* elíptica redondeada */
   font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
+/* Selector de estado editable — usado en admin.html */
+.selector-estado {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #374151;
+  cursor: pointer;
+}
+
 .badge-estado.pendiente {
-  background: #fef9c3;
-  color: #854d0e;
+  background: #fef3c7;
+  color: #b45309;
 }
 
 .badge-estado.enviado {
   background: #dbeafe;
-  color: #1e40af;
+  color: #1d4ed8;
 }
 
 .badge-estado.entregado {
@@ -1487,6 +1823,36 @@ body.tema-oscuro .modal-desc {
 .badge-estado.cancelado {
   background: #fee2e2;
   color: #991b1b;
+}
+
+/* junto a las demás .badge-estado.* */
+.badge-estado.procesando {
+  background: #ede9fe;
+  color: #5b21b6;
+}
+
+/* Selector de estado editable — usado en admin.html */
+.selector-estado {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #374151;
+  cursor: pointer;
+}
+
+/* modo oscuro */
+.tema-oscuro .badge-estado.procesando {
+  background: #2e1065;
+  color: #c4b5fd;
+}
+
+.tema-oscuro .selector-estado {
+  background: #1f2937;
+  border-color: #374151;
+  color: #e5e7eb;
 }
 
 /* Lista de productos dentro del pedido */
@@ -1514,83 +1880,61 @@ body.tema-oscuro .modal-desc {
   color: #111827;
 }
 
-/* --- Modo oscuro --- */
-.tema-oscuro .pedido-card {
+
+/* Modo oscuro */
+body.tema-oscuro .pedido-card {
   background: #1f2937;
   border-color: #374151;
 }
 
-.tema-oscuro .pedido-productos {
+body.tema-oscuro .pedido-productos {
   border-color: #374151;
 }
 
-.tema-oscuro .pedido-productos li {
+body.tema-oscuro .pedido-productos li {
   color: #9ca3af;
 }
 
-.tema-oscuro .pedido-total {
-  color: #f9fafb;
+body.tema-oscuro .pedido-fecha {
+  color: #b7b7b0;
 }
 
-.tema-oscuro .pedido-fecha,
-.tema-oscuro .pedidos-subtitulo {
-  color: #9ca3af;
+body.tema-oscuro .badge-estado.pendiente {
+  background: #92400e;
+  color: #fde68a;
 }
 
-.tema-oscuro .badge-estado.pendiente {
-  background: #422006;
-  color: #fde047;
-}
-
-.tema-oscuro .badge-estado.enviado {
+body.tema-oscuro .badge-estado.enviado {
   background: #1e3a8a;
   color: #93c5fd;
 }
 
-.tema-oscuro .badge-estado.entregado {
+body.tema-oscuro .badge-estado.entregado {
   background: #14532d;
   color: #86efac;
 }
 
-.tema-oscuro .badge-estado.cancelado {
-  background: #450a0a;
+body.tema-oscuro .badge-estado.cancelado {
+  background: #7f1d1d;
   color: #fca5a5;
 }
 
-/* junto a las demás .badge-estado.* */
-.badge-estado.procesando { background: #ede9fe; color: #5b21b6; }
 
-/* Selector de estado editable — usado en admin.html */
-.selector-estado {
-  padding: 6px 12px;
-  border-radius: 999px;
-  border: 1px solid #e5e7eb;
-  background: #fff;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #374151;
-  cursor: pointer;
-}
 
-/* modo oscuro */
-.tema-oscuro .badge-estado.procesando { background: #2e1065; color: #c4b5fd; }
-.tema-oscuro .selector-estado         { background: #1f2937; border-color: #374151; color: #e5e7eb; }
-
-/* ==============================================================
-  S17d:DROPDOWN DE USUARIO EN EL HEADER
-  Aparece al hacer click en el nombre del usuario logueado
-  ============================================================== */
+/* 👤 DROPDOWN DE USUARIO EN EL HEADER
+   Aparece al hacer clic en el nombre del usuario logueado
+*/
 
 /* Contenedor relativo para posicionar el dropdown */
 .usuario-dropdown {
   position: relative;
-  display: inline-flex;
+  display: inline-block;
 }
 
 /* Botón que muestra el nombre del usuario */
-.usuario-btn{
+.usuario-btn {
   display: flex;
-  align-content: center;
+  align-items: center;
   gap: 6px;
   padding: 7px 14px;
   background: var(--color-primario);
@@ -1604,12 +1948,15 @@ body.tema-oscuro .modal-desc {
   font-family: inherit;
   transition: opacity 0.2s;
 }
-.usuario-btn:hover { opacity: .85; }
+
+.usuario-btn:hover {
+  opacity: .85;
+}
 
 /* Flecha que indica que hay un menú */
 .usuario-btn::after {
-  content: '🔻';
-  font-size: 11px;
+  content: "▾";
+  font-size: 13px;
   margin-left: 2px;
 }
 
@@ -1621,26 +1968,28 @@ body.tema-oscuro .modal-desc {
   right: 0;
   background: white;
   border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   min-width: 180px;
   overflow: hidden;
-  z-index: index 100;
+  z-index: 100;
 }
 
 /* Mostrar el menú cuando tiene la clase .abierto */
-.usuario-menu.abierto { display:block; }
+.usuario-menu.abierto {
+  display: block;
+}
 
-/*Cada opción de menú */
+/* Cada opción del menú */
 .usuario-menu a,
 .usuario-menu button {
   display: flex;
   align-items: center;
-  gap: 10px;
-  width: 100px;
+  gap: 8px;
+  width: 100%;
   padding: 12px 16px;
-  font: size 14px;
-  color:#374151;
+  font-size: 14px;
+  color: #374151;
   text-decoration: none;
   background: none;
   border: none;
@@ -1649,197 +1998,172 @@ body.tema-oscuro .modal-desc {
   text-align: left;
   transition: background 0.15s;
 }
+
 .usuario-menu a:hover,
-.usuario-menu button:hover { background: #f9fafb; }
+.usuario-menu button:hover {
+  background: #f9fafb;
+}
 
 /* Separador antes de "Cerrar sesión" */
-.usuario-menu .menu-separador {
+.usuario-menu-separador {
   height: 1px;
-  background: #f3f4f6;
+  background: #e5e7eb;
   margin: 4px 0;
 }
 
 /* "Cerrar sesión" en rojo */
-.usuario-menu .btn-cerrar-sesion        { color: #dc2626; }
-.usuario-menu .btn-cerrar-sesion:hover  { background: #fee2e2; }
+.usuario-menu .btn-cerrar-sesion {
+  color: #dc2626;
+}
 
-/*  --- Modo oscuro --- */
-.tema-oscuro .usuario-menu               { background: #1f2937; border-color: #374151; }
+.usuario-menu .btn-cerrar-sesion:hover {
+  background: #fef2f2;
+}
+
+/* 🌙 Modo oscuro */
+.tema-oscuro .usuario-menu {
+  background: #1f2937;
+  border-color: #374151;
+}
+
 .tema-oscuro .usuario-menu a,
-.tema-oscuro .usuario-menu button        { color: #e5e7eb; }
-.tema-oscuro .usuario-menu a:hover,
-.tema-oscuro .usuario-menu button:hover  { background: #374151; }
-.tema-oscuro .menu-separador             { background: #374151; }
-.tema-oscuro .btn-cerrar-sesion          { color: #f87171; }
-.tema-oscuro .btn-cerrar-sesion:hover    {background: #450a0a; }
+.tema-oscuro .usuario-menu button {
+  color: #e5e7eb;
+}
 
-/* =============================================
-    S17d: PERFIL DE USUARIO (perfil.html)
-================================================= */
+.tema-oscuro .usuario-menu a:hover,
+.tema-oscuro .usuario-menu button:hover {
+  background: #374151;
+}
+
+.tema-oscuro .usuario-menu-separador {
+  background: #374151;
+}
+
+.tema-oscuro .btn-cerrar-sesion {
+  color: #f87171;
+}
+
+.tema-oscuro .btn-cerrar-sesion:hover {
+  background: #450a0a;
+}
+
+/*
+===========================================
+  S17d: PERFIL DE USUARIO (perfil.html)
+===========================================
+*/
 
 .perfil-contenedor {
-    max-width: 520px;
-    margin: 60px auto;
-    padding: 40px 32px;
-    background: white;
-    border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-    text-align: center;
+  max-width: 520px;
+  margin: 60px auto;
+  padding: 48px 32px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  text-align: center;
 }
 
 .perfil-avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: var(--color-primario);
-    color: white;
-    font-size: 2rem;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 16px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--color-primario);
+  color: white;
+  font-size: 2rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
 }
 
 .perfil-nombre {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #111827;
-    margin: 0 0 8px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 8px;
 }
 
 .perfil-rol {
-    display: inline-block;
-    padding: 4px 12px;
-    background: #ddc9fe;
-    color: #6d28d9;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    margin-bottom: 28px;
+  display: inline-block;
+  padding: 4px 12px;
+  background: #e9edfe;
+  color: #6d28d9;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 28px;
 }
 
 .perfil-info {
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 28px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
 }
 
 .perfil-campo {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 16px;
-    background: #f9fafb;
-    border-radius: 10px;
-    gap: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f9fafb;
+  border-radius: 10px;
+  gap: 12px;
 }
 
-.perfil-etiqueta { font-size: 0.85rem; color: #6b7280; white-space: nowrap; }
-.perfil-valor    { font-size: 0.95rem; font-weight: 600; color: #111827; text-align: right; }
-.perfil-acciones { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.perfil-etiqueta {
+  font-size: 0.85rem;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.perfil-valor {
+  font-size: 0.9rem;
+  color: #111827;
+  font-weight: 600;
+  text-align: right;
+}
+
+.perfil-acciones {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
 .perfil-cargando,
-.perfil-error { text-align: center; padding: 80px 24px; color: #6b7280; }
-
-/*• Modo oscuro —• */
-.tema-oscuro .perfil-contenedor { background: #1f2937; }
-.tema-oscuro .perfil-nombre     { color: #f9fafb; }
-.tema-oscuro .perfil-rol        { background: #4c1d95; color: #ddd6fe; }
-.tema-oscuro .perfil-campo      { background: #111827; }
-.tema-oscuro .perfil-etiqueta   { color: #9ca3af; }
-.tema-oscuro .perfil-valor      { color: #f9fafb; }
-
-/* Línea de tiempo del pedido — usada en mispedidos.js y admin.js (js/timeline.js) */
-.timeline-pedido { 
-  display: flex; 
-  align-items: center; 
-  margin: 16px 0; 
-  padding-top: 12px; 
-  border-top: 1px solid #f3f4f6; 
-}
-.timeline-paso   { 
-  display: flex; 
-  flex-direction: column; 
-  align-items: center; 
-  gap: 6px; 
-  flex-shrink: 0; 
-}
-.timeline-punto  { 
-  width: 32px; 
-  height: 32px; 
-  border-radius: 50%; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center;
-  font-size: 0.9rem; 
-  background: #f3f4f6; 
-  border: 2px solid #e5e7eb; 
-  filter: grayscale(1); 
-  opacity: 0.5; 
-}
-.timeline-texto  { 
-  font-size: 0.7rem; 
-  color: #9ca3af; 
-  font-weight: 600; 
-  text-align: center; 
-  white-space: nowrap; 
-}
-.timeline-linea  { 
-  flex: 1; 
-  height: 2px; 
-  background: #e5e7eb; 
-  margin: 0 4px; 
-  margin-bottom: 22px; 
+.perfil-error {
+  text-align: center;
+  padding: 80px 24px;
+  color: #6b7280;
 }
 
-.timeline-paso.completado .timeline-punto,
-.timeline-paso.activo .timeline-punto { 
-  filter: none; 
-  opacity: 1; 
-  background: #dcfce7; 
-  border-color: #166534; }
-.timeline-paso.completado .timeline-texto,
-.timeline-paso.activo .timeline-texto { 
-  color: #166534; 
-}
-.timeline-paso.activo .timeline-punto { 
-  background: #39a900; 
-  border-color: #2d8400; 
-  box-shadow: 0 0 0 4px rgba(57,169,0,0.15); 
-}
-.timeline-paso.activo .timeline-texto { 
-  color: #2d8400; 
-  font-weight: 800; 
+/* ── Modo oscuro ── */
+
+.tema-oscuro .perfil-contenedor {
+  background: #1f2937;
 }
 
-/* modo oscuro */
-.tema-oscuro .timeline-pedido { 
-  border-color: #374151; 
-}
-.tema-oscuro .timeline-punto { 
-  background: #374151; 
-  border-color: #4b5563; 
-}
-.tema-oscuro .timeline-texto  { 
-  color: #6b7280; 
-}
-.tema-oscuro .timeline-linea { 
-  background: #374151; 
-}
-.tema-oscuro .timeline-paso.completado .timeline-punto,
-.tema-oscuro .timeline-paso.activo .timeline-punto { 
-  background: #14432a; 
-  border-color: #22c55e; 
+.tema-oscuro .perfil-nombre {
+  color: #f9fafb;
 }
 
-.tema-oscuro .timeline-paso.completado .timeline-texto,
-.tema-oscuro .timeline-paso.activo .timeline-texto { 
-  color: #86efac; 
+.tema-oscuro .perfil-rol {
+  background: #4c1d95;
+  color: #ddd6fe;
 }
-.tema-oscuro .timeline-paso.activo .timeline-punto { 
-  background: #39a900; 
-  border-color: #86efac; 
+
+.tema-oscuro .perfil-campo {
+  background: #111827;
+}
+
+.tema-oscuro .perfil-etiqueta {
+  color: #9ca3af;
+}
+
+.tema-oscuro .perfil-valor {
+  color: #f9fafb;
 }
