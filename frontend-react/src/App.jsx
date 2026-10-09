@@ -1,49 +1,59 @@
 import Navbar from './Navbar.jsx'
+import Footer from './Footer.jsx'
+import ProductCard from './ProductCard.jsx'
+
+const productos = [
+  {
+    nombre: "Mouse Inalambrico",
+    descripcion: "Mouse ergonomico, conexion Bluetooth",
+    precio: "$89.900",
+    Imagen: "https://placehold.co/300x200",
+    stock: 12
+  },
+  {
+    nombre: "Teclado Mecanico",
+    descripcion: "Switches azules, retroiluminado RGB",
+    precio: "$149.900",
+    Imagen: "https://placehold.co/300x200",
+    stock: 8
+  },
+  {
+    nombre: "Monitor 24",
+    descripcion: "Full HD, 75Hz, panel IPS",
+    Imagen: "https://placehold.co/300x200",
+    precio: "$89.900",
+    stock: 12
+  },
+  {
+    nombre: "Audifonos Bluetooth",
+    descripcion: "Cancelacion de ruido, 20H de bateria",
+    precio: "$199.900",
+    Imagen: "https://placehold.co/300x200",
+    stock: 5
+  }
+]
+
 function App() {
   return (
-  
-  <main className="max-w-6xl mx-auto px-6 py-10 flex flex-col gap-10">
+
+  <main className="min-h-screen max-w-6xl mx-auto px-6 py-10 flex flex-col justify-between gap-10">
     <Navbar />
 
     <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-col-3 gap-6">
 
-      {/* tarjeta 1 */}
-      <div className="flex flex-col gap-2 p-4 rounded-xl shadow-md bg-white">
-        <img src="https://placehold.co/300x200" className="rounded-lg" />
-        <h3 className="font-bold text-lg">Mouse Inalambrico</h3>
-        <p className="text-texto-dim text-sm">Mouse ergonomico, conexion Bluetooth</p>
-        <p className="text-verde font-extrabold">$89.900</p>
-      </div>
-
-      {/* tarjeta 2 */}
-      <div className="flex flex-col gap-2 p-4 rounded-xl shadow-md bg-white">
-        <img src="https://placehold.co/300x200" className="rounded-lg" />
-        <h3 className="font-bold text-lg">Teclado Mecanico</h3>
-        <p className="text-texto-dim text-sm">Switches azules, retroiluminado RGB</p>
-        <p className="text-verde font-extrabold">$149.900</p>
-      </div>
-
-      {/* tarjeta 3 */}
-      <div className="flex flex-col gap-2 p-4 rounded-xl shadow-md bg-white">
-        <img src="https://placehold.co/300x200" className="rounded-lg" />
-        <h3 className="font-bold text-lg">Monitor 24</h3>
-        <p className="text-texto-dim text-sm">Full HD, 75Hz, panel IPS</p>
-        <p className="text-verde font-extrabold">$89.900</p>
-      </div>
-
-      {/* tarjeta 4 */}
-      <div className="flex flex-col gap-2 p-4 rounded-xl shadow-md bg-white">
-        <img src="https://placehold.co/300x200" className="rounded-lg" />
-        <h3 className="font-bold text-lg">Audifonos Bluetooth</h3>
-        <p className="text-texto-dim text-sm">Cancelacion de ruido, 20H de bateria</p>
-        <p className="text-verde font-extrabold">$199.900</p>
-      </div>
-
+      {productos.map((producto, index) => (
+        <ProductCard
+          key={index}
+          nombre={producto.nombre}
+          descripcion={producto.descripcion}
+          precio={producto.precio}
+          imagen={producto.Imagen}
+          stock={producto.stock}
+        />
+      ))}
     </section>
-    <footer className="flex flex-col md:flex-rowjustify-between items-center gap-2 md:gap-0 p-6 bg-texto text-white">
-      <p>© 2026 TechStore Pro</p>
-      <p className="text-xs">Hecho con tailwind CSS</p>
-    </footer>
+
+    <Footer />
   </main>
   )
 }
