@@ -3,6 +3,7 @@ import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
 import Home from "./Home.jsx";
 import Productos from './Productos.jsx'
+import NotFound from "./NotFound.jsx";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/productos" element={<Productos />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </main>
