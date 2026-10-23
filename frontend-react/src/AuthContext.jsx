@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { CartContext } from "./CartContext";
 
 export const AuthContext = createContext();
 
@@ -25,3 +26,5 @@ export function AuthProvider({ children }) {
         </AuthContext.Provider>
     );
 }
+
+export default AuthContext
