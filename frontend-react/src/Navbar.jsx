@@ -1,10 +1,12 @@
-import { Link, useLocation } from 'react-router-dom'
-import { useContext } from 'react'
-import { CartContext } from './CartContext.jsx'
+import { Link, useLocation } from 'react-router-dom';
+import { use, useContext } from 'react';
+import { CartContext } from './CartContext.jsx';
+import { AuthContext } from "./AuthContext.jsx";
 
 function Navbar() {
-    const ubicacion = useLocation()
-    const { items } = useContext(CartContext)
+    const ubicacion = useLocation();
+    const { items } = useContext(CartContext);
+    const { usuario } = useContext(AuthContext);
     return (
         <nav className="flex items-center justify-between px-8 py-4 bg-white border-b border-slate-200">
             <div className="text-xl font-extrabold text-verde">
