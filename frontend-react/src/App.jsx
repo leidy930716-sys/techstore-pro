@@ -7,15 +7,17 @@ import NotFound from "./NotFound.jsx";
 
 function App() {
   return (
-    <main className="min-h-screen max-w-6xl mx-auto px-6 py-10 flex flex-col justify-between gap-10">
+    <div className='min-h-screen flex flex-col'>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/productos" element={<Productos />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <main className="flex-1 w-full max-w-6xl mx-auto px-6 py-10 ">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/productos" element={<Productos />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
       <Footer />
-    </main>
+    </div>
   )
 }
 

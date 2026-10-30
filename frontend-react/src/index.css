@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@theme{
+@theme {
     /* Base - blanco/negro puro */
     --color-ink: #0A0A0A;
     --color-paper: #ffffff;
@@ -20,4 +20,14 @@
     --font-wordmark: 'Michroma', sans-serif;
     --font-display: 'Space Grotesk', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
+
+    /* Forma y profundidad */
+--radius-card: 10px;
+--shadow-float: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+@layer base {
+    body {
+        @apply bg-paper text-ink font-sans antialiased;
+    }
 }

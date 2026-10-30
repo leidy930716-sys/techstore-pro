@@ -3,6 +3,10 @@ import { use, useContext } from 'react';
 import { CartContext } from './CartContext.jsx';
 import { AuthContext } from "./AuthContext.jsx";
 
+const enlaces = [
+    ruta: "/", texto: "Inicio" },
+]
+
 function Navbar() {
     const ubicacion = useLocation();
     const { items } = useContext(CartContext);
