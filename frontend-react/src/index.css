@@ -19,11 +19,12 @@
     /* Tipografía */
     --font-wordmark: 'Michroma', sans-serif;
     --font-display: 'Space Grotesk', sans-serif;
+    --font-sans: 'Inter', system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
 
     /* Forma y profundidad */
---radius-card: 10px;
---shadow-float: 0 8px 24px rgba(0, 0, 0, 0.08);
+    --radius-card: 10px;
+    --shadow-float: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 @layer base {
