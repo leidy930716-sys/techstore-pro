@@ -1,22 +1,133 @@
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import ProductCard from "./ProductCard.jsx";
+
 function Home() {
-    const navegar = useNavigate()
+    const navigate = useNavigate();
+    const [productos, setProductos] = useState([]);
+    const [cargando, setCargando] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        fetch("http://localhost:3000/api/productos")
+            .then(res => res.json())
+            .then(data => setProductos(data))
+            .catch(() => setError("No se pudo conectar al servidor"))
+            .finally(() => setCargando(false));
+    }, []);
+
+    const destacado = productos[0];
+    const catalogo = productos.slice(0, 4);
+
+    const estadisticas = [
+        { valor: cargando ? "..." : productos.length, etiqueta: "productos" },
+        { valor: "2023", etiqueta: "Desde" },
+        { valor: "Huila", etiqueta: "Sazón" },
+    ];
+
     return (
-        <div className="flex flex-col items-center gap-4 py-20">
-            <h1 className="text-4xl font-extrabold text-verde">
-            Bienvenido a TechStore
-            </h1>
-            <p className="text-texto-dim max-w-md">
-            Tecnología de calidad, al mejor precio. Explora nuestro catálogo de productos.
-            </p>
-            <button
-                onClick={() => navegar("/productos")}
-                className='bg-verde text-white py-2 px-6 rounded-lg font-bold'
-            >
-                ver catálogo
-            </button>
+        <div className="min-h-screen bg-[#0B0F24]">
+            {/* HERO */}
+            <section className="relative flex flex-col lg:flex-row items-center justify-between gap-12 overflow-hidden pt-6">
+                <span className="hidden md:block absolute top-20 -right-4 font-display font-bold text-[280px] leading-none tracking-tight text-gray-50 select-none pointer-events-none">
+                    01
+                </span>
+
+                <div className="relative max-w-xl">
+                    <span className="inline-flex items-center gap-2 bg-gray-900 rounded-full px-3 py-1.5 text-xs font-semibold">
+                        <span className="w-1.5 h-1.5 rounded-full bg-accent"></span>
+                        Tienda en línea · Barzón, Huila
+                    </span>
+
+                    <h1 className="font-display font-bold text-5xl md:text-6xl leading-[1.02] tracking-tight mt-7 mb-5">
+                        Tecnología <span className="text-accent">sin ruido</span><br />
+                    </h1>
+
+                    <p className="text-lg text-gray-700 leading-relaxed max-w-md mb-9">
+                        Portátiles, celulares y componentes con precios claros y asesoría personalizada.
+                    </p>
+
+                    <div className="flex flex-wrap gap-3.5">
+                        <button
+                            onClick={() => navigate("/productos")}
+                            className="bg-ink text-paper px-7 py-3.5 rounded-card text-sm font-semibold hover:bg-accent transition-colors"
+                        >
+                            Ver productos →
+                        </button>
+
+                        <Link
+                            to="/nosotros"
+                            className="border border-gray-300 px-7 py-3.5 rounded-card text-sm font-semibold hover:border-ink transition-colors"
+                        >
+                            Conócenos
+                        </Link>
+                    </div>
+
+                    <div className="flex gap-10 mt-14 pt-8 border-t border-gray-100">
+                        {estadisticas.map((e, i) => (
+                            <div key={i}>
+                                <p className="font-display font-bold text-3xl">{e.valor}</p>
+                                <p className="text-sm text-gray-500">{e.etiqueta}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {destacado && (
+                    <div className="relative w-full max-w-md shrink-0 aspect-square bg-gray-50 rounded-[2rem] overflow-hidden">
+                        <img
+                            src={destacado.imagen}
+                            alt={destacado.nombre}
+                            className="w-full h-full object-cover"
+                        />
+
+                        <div className="absolute left-5 bottom-5 bg-paper rounded-card p-3.5 px-4 shadow-float">
+                            <p className="text-[11px] uppercase tracking-wider text-gray-500">
+                                Destacado
+                            </p>
+                            <p className="font-semibold text-base">{destacado.nombre}</p>
+                            <p className="text-xl font-semibold text-accent mt-1">
+                                {destacado.precio}
+                            </p>
+                        </div>
+                    </div>
+                )}
+            </section>
+
+            {/* CATALOGO */}
+            <section>
+                <div className="flex items-baseline justify-between mb-8">
+                    <h2 className="font-display font-bold text-3xl tracking-tight">
+                        Catálogo <span className="text-accent">destacado</span>
+                    </h2>
+
+                    <Link
+                        to="/productos"
+                        className="text-sm font-semibold text-gray-700 hover:text-ink"
+                    >
+                        Ver todos
+                    </Link>
+                </div>
+
+                {cargando && <p className="text-gray-500">Cargando catálogo...</p>}
+                {error && <p className="text-accent-dark">{error}</p>}
+                {!cargando && !error && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                        {catalogo.map(p => (
+                            <ProductCard
+                                key={p.id}
+                                id={p.id}
+                                nombre={p.nombre}
+                                descripcion={p.descripcion}
+                                precio={p.precio}
+                                imagen={p.imagen}
+                            />
+                        ))}
+                    </div>
+                )}
+            </section>
         </div>
-    )
+    );
 }
 
-export default Home
+export default Home;

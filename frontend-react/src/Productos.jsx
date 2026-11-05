@@ -60,7 +60,7 @@ function Productos() {
                                 nombre={p.nombre}
                                 descripcion={p.descripcion}
                                 precio={p.precio}
-                                imagen={p.Imagen}
+                                imagen={p.imagen}
                                 icono={p.icono}
                             />
                         ))}
