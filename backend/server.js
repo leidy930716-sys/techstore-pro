@@ -10,6 +10,8 @@ const verificarToken = require('./middleware/auth');
 const productosRoutes = require('./routes/productos');
 const ordenesRoutes = require('./routes/ordenes');
 const pagoRoutes = require('./routes/pago');
+const contactoRoutes = require('./routes/contacto');
+
 
 //2 . crear la aplicacion y definir el puerto
 
@@ -46,5 +48,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/productos', productosRoutes);
 // 13. Rutas de ordenes <- 
 app.use('/api/ordenes', ordenesRoutes);
-// El webhnook queda expuesto en /api/pagos/webhook dentro del mismo router
+// 14. El webhook queda expuesto en /api/pagos/webhook dentro del mismo router
 app.use('/api/pagos', pagoRoutes);
+// 15. Rutas de contacto
+app.use('/api/contacto', contactoRoutes);
