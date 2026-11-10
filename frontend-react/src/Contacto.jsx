@@ -34,3 +34,61 @@ function Campo({ etiqueta, nombre, error, children }) {
         </div>
     )
 }
+
+function Contacto() {
+    const [form, setForm] = useState(FORM_VACIO);
+    const [errores, setErrores] = useState({});
+    const [estado, setEstado] = useState("inactivo");
+    const [mensajeError, setMensajeError] = useState("");
+
+    function manejarCambio(e)  {
+        setForm({ ...form, [e.target.name]: "" });
+        if (estado !== "inactivo") setEstado("inactivo");
+    }
+
+    function validar() {
+        const nuevos = {};
+        if (form.nombre.trim().length < 3) {
+            nuevos.nombre = "Escribe tu nombre completo, minimo 3 caracteres";
+        }
+        if (!/^\S+@\S+\.\S+$/.test(form.email)) {
+            nuevos.email = "Escribe un correo valido, como nombre@correo.com";
+        }
+        if (form.telefono && !/^\d{7,10}$/.test(form.telefono)) {
+            nuevos.telefono = "Solo números, entre 7 y 10 caracteres";
+        }
+        if (!form.asunto) {
+            nuevos.asunto = "Selecciona un asunto";
+        }
+        if (mensaje.trim().length < 10) {
+            nuevos.mensaje = "El mensaje debe tener al menos 10 caracteres";
+        }
+        return nuevos;
+    }
+
+    async function manejarEnvio(e) {
+        e.preventDefault();
+
+        const nuevos = validar();
+        setErrores(nuevos);
+        if (Object.keys(nuevos).length > 0) return;
+
+        setEstado("enviando");
+        try {
+            const res = await fetch(URL_API, {
+                method: "POST",
+                headers: { "content-Type": "application/json" },
+                body: JSON.stringify(form),
+            });
+            const datos = await res.json();
+            if (!res.ok) throw new Error(datos.error || "No se pudo enviar el mensaje");
+
+            setForm(FORM_VACIO);
+            setEstado("exito");
+        } catch (err) {
+            setMensajeError(
+                err in
+            )
+        }
+    }
+}
