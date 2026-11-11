@@ -1,9 +1,10 @@
 import { Routes, Route } from 'react-router-dom'
-import Navbar from './Navbar.jsx'
-import Footer from './Footer.jsx'
+import Navbar from "./Navbar.jsx"
+import Footer from "./Footer.jsx"
 import Home from "./Home.jsx";
-import Productos from './Productos.jsx'
-import Nosotros from './Nosotros.jsx'
+import Productos from "./Productos.jsx"
+import Nosotros from "./Nosotros.jsx"
+import Contacto from "./Contacto.jsx"
 import NotFound from "./NotFound.jsx";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/productos" element={<Productos />} />
           <Route path="/nosotros" element={<Nosotros />} />
+          <Route path="/contacto" element={<Contacto />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
