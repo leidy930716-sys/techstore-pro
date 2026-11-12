@@ -8,7 +8,16 @@ const router = express.Router();
 //2. Post /api/auth/registro - Crear cuenta nueva
 router.post('/registro', async (req, res) => {
   try {
+    // El rol NO se lee del cuerpo: lo que manda el navegador no es de fiar
     const { nombre, email, password, rol, departamento, municipio } = req.body;
+
+    // Validar los datos: el servidor revisa aunque la pagina ya lo haya hecho
+    if (!nombre || nombre.trim().length < 3) {
+      return res.status(400).json({ error: 'El correo no es valido' });
+    }
+    if (!password || password.length < 6) {
+      
+    }
 
     // verificar que el email no exista ya
     const existe = await Usuario.findOne({ email });

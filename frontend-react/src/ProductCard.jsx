@@ -4,7 +4,8 @@ import { CartContext } from "./CartContext.jsx";
 function ProductCard(props) {
   const { agregarAlCarrito } = useContext(CartContext);
 
-  function agregar() {
+  function agregar(e) {
+    e.stopPropagation();
     agregarAlCarrito({
       id: props.id,
       nombre: props.nombre,
@@ -14,7 +15,7 @@ function ProductCard(props) {
   }
 
   return (
-    <article className="group relative aspect-4/5 overflow-hidden rounded-3xl bg-ink">
+    <article onClick={props.onVer} className="group relative aspect-4/5 overflow-hidden rounded-3xl bg-ink">
       <img
         src={props.imagen.replace("w=400&h=250", "w=800&h=1000")}
         alt={props.nombre}
