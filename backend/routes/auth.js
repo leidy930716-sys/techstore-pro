@@ -13,10 +13,13 @@ router.post('/registro', async (req, res) => {
 
     // Validar los datos: el servidor revisa aunque la pagina ya lo haya hecho
     if (!nombre || nombre.trim().length < 3) {
-      return res.status(400).json({ error: 'El correo no es valido' });
+      return res.status(400).json({ error: 'El nombre debe tener almenos 3 caracteres' });
+    }
+    if(!email || !/^\S+@\S+\.\S+$/.test(email)) {
+      return res.status(400).json({ error:'El correo no es valido'});
     }
     if (!password || password.length < 6) {
-      
+      return res.status(400).json({error: 'La contraseña debe tener al menos 6 caracteres'});
     }
 
     // verificar que el email no exista ya
@@ -27,7 +30,7 @@ router.post('/registro', async (req, res) => {
     const hash = await bcrypt.hash(password, 10);
 
     // Guardar el usuario con la constraseña encriptada
-    const usuario = await Usuario.create({ nombre, email, password: hash, rol, departamento, municipio });
+    const usuario = await Usuario.create({ nombre, email, password: hash, departamento, municipio, rol: 'cliente' });
 
     res.status(201).json({ mensaje: 'Usuario creado correctamente', id: usuario._id });
   } catch (err) {
