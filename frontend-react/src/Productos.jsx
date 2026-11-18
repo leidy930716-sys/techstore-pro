@@ -30,7 +30,7 @@ function Productos() {
     }, []);
 
     const filtrados = productos.filter((p) =>
-        p.nombre.toLowerCase().includes(busqueda.toLowerCase())
+        (p.nombre || "").toLowerCase().includes(busqueda.toLowerCase())
     );
 
     const ordenados = [...filtrados];
