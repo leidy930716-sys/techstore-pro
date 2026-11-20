@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { CartContext } from "./CartContext.jsx";
-import { AuthContext } from "./AuthContext.jsx";
+import { CartContext } from "../context/CartContext";
+import { AuthContext } from "../context/AuthContext";
 
 const enlaces = [
     { ruta: "/", texto: "Inicio" },
@@ -11,9 +11,10 @@ const enlaces = [
 ];
 
 function Navbar() {
-    const { items, vaciarCarrito } = useContext(CartContext);
-    const { usuario } = useContext(AuthContext);
+    const { items } = useContext(CartContext);
+    const { usuario, logout } = useContext(AuthContext);
     const [abierto, setAbierto] = useState(false);
+    const unidades = items.reduce((suma, item) => suma + item.cantidad, 0);
 
     function cerrar() {
         setAbierto(false);
@@ -33,7 +34,7 @@ function Navbar() {
                                 to={enlace.ruta}
                                 end
                                 className={({ isActive }) =>
-                                    isActive? "text-ink font-semibold" : "hover:text-ink transition-colors"
+                                    isActive ? "text-ink font-semibold" : "hover:text-ink transition-colors"
                                 }
                             >
                                 {enlace.texto}
@@ -43,22 +44,29 @@ function Navbar() {
                 </ul>
 
                 <div className="flex items-center gap-4">
-                    <span className="font-mono text-xs md:text-[13px] text-gray-700 whitespace-nowrap">
-                        Carrito ({items.length})
-                    </span>
+                    <Link to="/carrito" onClick={cerrar} className="font-mono text-xs md:text-[13px] text-gray-700 whitespace-nowrap hover:text-ink transition-color"
+                    >
+                        Carrito ( {unidades} )
+                    </Link>
 
-                    {items.length > 0 && (
-                        <button
-                            onClick={vaciarCarrito}
-                            className="hidden md:block text-xs text-accent-dark underline"
+                    {usuario ? (
+                        <div className="hidden md:flex items-center gap-4">
+                            <span className="text-sm font-semibold">Hola, {usuario}</span>
+                            <button
+                                onClick={logout}
+                                className="text-sm text-gray-700 underline hover:text-ink transition-colors"
+                            >
+                                Salir
+                            </button>
+                        </div>
+                    ) : (
+                        <Link
+                            to="/login"
+                            className="hidden md:block bg-ink text-paper px-5 py-2.5 rounded-card text-sm font-semibold hover:bg-accent transition-colors"
                         >
-                            Vaciar
-                        </button>
+                            Ingresar
+                        </Link>
                     )}
-
-                    <button className="hidden md:block bg-ink text-paper px-5 py-2.5 rounded-card text-sm font-semibold hover:bg-accent transition-colors">
-                        {usuario ? usuario : "Ingresar"}
-                    </button>
 
                     <button
                         onClick={() => setAbierto(!abierto)}
@@ -90,7 +98,8 @@ function Navbar() {
 
             <div
                 inert={!abierto}
-                className={"md:hidden grid transition-[grid-template-rows] duration-300 ease-out" +
+                className={
+                    "md:hidden grid transition-[grid-template-rows] duration-300 ease-out " +
                     (abierto ? "grid-rows-[1fr]" : "grid-rows-[0fr]")
                 }
             >
@@ -99,14 +108,10 @@ function Navbar() {
                         {enlaces.map((enlace, i) => (
                             <li
                                 key={enlace.ruta}
-                                style={{
-                                    transitionDelay: abierto ? i * 60 + 100 + "ms" : "0ms",
-                                }}
+                                style={{ transitionDelay: abierto ? i * 60 + 100 + "ms" : "0ms" }}
                                 className={
                                     "transition-all duration-300 " +
-                                    (abierto
-                                        ? "opacity-100 translate-y-0"
-                                        : "opacity-0 -translate-y-2")
+                                    (abierto ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2")
                                 }
                             >
                                 <NavLink
@@ -123,21 +128,35 @@ function Navbar() {
                             </li>
                         ))}
                         <li
-                            style={{
-                                transitionDelay: abierto
-                                    ? enlaces.length * 60 + 100 + "ms"
-                                    : "0ms",
-                            }}
+                            style={{ transitionDelay: abierto ? enlaces.length * 60 + 100 + "ms" : "0ms" }}
                             className={
-                                "transition-all duration-300 " +
-                                (abierto
-                                    ? "opacity-100 translate-y-0"
-                                    : "opacity-0 -translate-y-2")
+                                "pt-4 transition-all duration-300 " +
+                                (abierto ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2")
                             }
                         >
-                            <button className="w-full bg-ink text-paper py-3.5 rounded-card text-sm font-semibold">
-                                {usuario ? usuario : "Ingresar"}
-                            </button>
+                            {usuario ? (
+                                <div className="flex items-center justify-between">
+                                    <span className="text-sm font-semibold">Hola, {usuario}</span>
+
+                                    <button
+                                        onClick={() => {
+                                            logout();
+                                            cerrar();
+                                        }}
+                                        className="bg-ink text-paper px-6 py-3 rounded-card text-sm font-semibold"
+                                    >
+                                        Salir
+                                    </button>
+                                </div>
+                            ) : (
+                                <Link
+                                    to="/login"
+                                    onClick={cerrar}
+                                    className="block w-full text-center bg-ink text-paper py-3.5 rounded-card text-sm font-semibold"
+                                >
+                                    Ingresar
+                                </Link>
+                            )}
                         </li>
                     </ul>
                 </div>

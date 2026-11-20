@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { Form, Link, useNavigate } from "react-router-dom";
+import { Form, Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "./AuthContext.jsx";
 import Campo, { claseInput } from "./Campo.jsx";
 
@@ -7,11 +7,14 @@ const URL_API = "http://localhost:3000/api/auth";
 
 const FORM_VACIO = { email: "", password: "" };
 
-function login() {
+function Login() {
     const { login } = useContext(AuthContext);
     const navegar = useNavigate();
+    const ubicacion = useLocation();
+    const aviso = ubicacion.state ? ubicacion.state.aviso : null;
     const [form, setForm] = useState(FORM_VACIO);
     const [errores, setErrores] = useState("inactivo");
+    const [estado, setEstado] = useState("inactivo");
     const [mensajeError, setMensajeError] = useState("");
 
     function manejarCambio(e) {
@@ -57,7 +60,7 @@ function login() {
         }
     }
 
-    return(
+    return (
         <div className="max-w-md mx-auto flex flex-col gap-8 pt-6">
             <section>
                 <p className="font-mono text-xs uppercase tracking-widest text-gray-500">
@@ -68,6 +71,60 @@ function login() {
                 </h1>
                 <p className="text-gray-700">Entra con tu correo y tu contraseña.</p>
             </section>
+            {aviso && (
+                <p role="status" className=" bg-gray-50 rounded-card p-4 text-sm font-semibold">
+                    {aviso}
+                </p>
+            )}
+            <form onSubmit={manejarEnvio} noValidate className="flex flex-col gap-5">
+                <Campo etiqueta="Correo electronico" nombre="email" error={errores.email}>
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={form.email}
+                        onChange={manejarCambio}
+                        placeholder="tucorreo@ejemplo.com"
+                        className={claseInput(errores.email)}
+                    />
+                </Campo>
+
+                <Campo etiqueta="Contraseña" nombre="password" error={errores.password}>
+                    <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        value={form.password}
+                        onChange={manejarCambio}
+                        placeholder="Tu contraseña"
+                        autoComplete="current-password"
+                        className={claseInput(errores.password)}
+                    />
+                </Campo>
+
+                <button
+                    type="submit"
+                    disabled={estado === "enviado"}
+                    className="bg-ink text-papper px-7 py-3.5 rounded-card text-sm font-semibold enabled:hover:bg-accent transition-colors disabled:cursor-not-allowed"
+                >
+                    {estado === "enviando" ? "Entrando..." : "Entrar ->"}
+                </button>
+
+                {estado === "error" && (
+                    <p role="alert" className="bg-gray-50 rounded-card p-4 text-sm font-semibold text-accent-dark">
+                        {mensajeError}
+                    </p>
+                )}
+            </form>
+
+            <p className="text-sm text-gray-700">
+                ¿No tienes cuenta?{" "}
+                <Link to="/registro" className="font-semibold underline hover:text-accent transition-colors">
+                    Regístrate
+                </Link>
+            </p>
         </div>
-    )
+    );
 }
+
+export default Login;
