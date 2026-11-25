@@ -5,6 +5,11 @@ const jwt = require('jsonwebtoken');
 const Usuario = require('../models/Usuario');
 const router = express.Router();
 
+// Dominios de correo que aceptamos al registrarse
+const dominiosPermitidos = [
+  'gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com', 'icloud.com', 'me.com', 'mac.com', 'soy.sena.edu.co'
+];
+
 //2. Post /api/auth/registro - Crear cuenta nueva
 router.post('/registro', async (req, res) => {
   try {
@@ -17,6 +22,11 @@ router.post('/registro', async (req, res) => {
     }
     if(!email || !/^\S+@\S+\.\S+$/.test(email)) {
       return res.status(400).json({ error:'El correo no es valido'});
+    }
+    // El dominio es lo que va despues de la última @
+    const dominio = email.slice(email.lastIndexOf('@') + 1).toLowerCase();
+    if (!dominiosPermitidos.includes(dominio)) {
+      return res.status(400).json({ error: 'Usa un correo de Gmail, Hotmail, Outlook, Yahoo, soy.sena.edu.co o iCloud '});
     }
     if (!password || password.length < 6) {
       return res.status(400).json({error: 'La contraseña debe tener al menos 6 caracteres'});
@@ -63,6 +73,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// 4. GET./api/auth/perfil -  devuelve los datos del usuario logueado (requiere token)
 const verificarToken = require('../middleware/auth');
 
 router.get('/perfil', verificarToken, async (req, res) => {
@@ -81,5 +92,5 @@ router.get('/perfil', verificarToken, async (req, res) => {
 });
 
 
-//4. Exportar el router
+// 5. Exportar el router
 module.exports = router;

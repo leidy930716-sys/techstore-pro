@@ -1,13 +1,13 @@
 import { Routes, Route } from 'react-router-dom'
-import Navbar from "./Navbar";
+import Navbar from "./Navbar.jsx";
 import Footer from "./Footer.jsx";
 import Home from "./Home.jsx";
 import Productos from "./Productos.jsx";
 import ProductoDetalle from "./ProductoDetalle.jsx";
 import Nosotros from "./Nosotros.jsx";
 import Contacto from "./Contacto.jsx"
-import Login from './Login.jsx';
-import Registro from './Registro.jsx';
+import Login from "./Login.jsx";
+import Registro from "./Registro.jsx";
 import NotFound from "./NotFound.jsx";
 
 function App() {
