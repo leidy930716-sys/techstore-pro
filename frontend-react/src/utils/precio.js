@@ -1,5 +1,5 @@
 // El precio llega como texto: "$8.999.0000". Para sumar hay que volverlo número.
-export function precioNumero(precio) {
+export function precioANumero(precio) {
     return Number(precio.replace(/[$.]/g, ""));
 }
 
