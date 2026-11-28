@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { CartContext } from "./CartContext.jsx";
+import { CartContext } from "../context";
 import { AuthContext } from "./AuthContext.jsx";
 
 const enlaces = [
