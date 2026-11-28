@@ -44,7 +44,10 @@ function Navbar() {
                 </ul>
 
                 <div className="flex items-center gap-4">
-                    <Link to="/carrito" onClick={cerrar} className="font-mono text-xs md:text-[13px] text-gray-700 whitespace-nowrap hover:text-ink transition-color"
+                    <Link 
+                    to="/carrito" 
+                    onClick={cerrar} 
+                    className="font-mono text-xs md:text-[13px] text-gray-700 whitespace-nowrap hover:text-ink transition-color"
                     >
                         Carrito ( {unidades} )
                     </Link>

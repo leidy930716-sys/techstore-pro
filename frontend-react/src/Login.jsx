@@ -12,6 +12,7 @@ function Login() {
     const navegar = useNavigate();
     const ubicacion = useLocation();
     const aviso = ubicacion.state ? ubicacion.state.aviso : null;
+    const destino = ubicacion.state ? ubicacion.state.desde : null;
     const [form, setForm] = useState(FORM_VACIO);
     const [errores, setErrores] = useState("inactivo");
     const [estado, setEstado] = useState("inactivo");
@@ -51,7 +52,7 @@ function Login() {
             if (!res.ok) throw new Error(datos.error || "No se pudo iniciar sesión");
 
             login(datos.nombre, datos.token, datos.rol);
-            navegar("/");
+            navegar(destino || "/");
         } catch (err) {
             setMensajeError(
                 err instanceof TypeError ? "No se pudo conectar al servidor" : err.message,

@@ -13,8 +13,7 @@ function Carrito() {
 
     const unidades = items.reduce((suma, item) => suma + item.cantidad, 0);
     const total = items.reduce(
-        (suma, irem) => suma + precioANumero(item.formatearPrecio) * item.cantidad, 0,
-    );
+        (suma, item) => suma + precioANumero(item.precio) * item.cantidad, 0);
 
     function irAIngresar() {
         navegar("/login", {
